@@ -12,9 +12,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Greikol | Desarrollador Web - Costa Rica",
+  title: "Greikol Q.A | Desarrollador Web - Costa Rica",
   description:
-    "Portafolio de Greikol, desarrollador web junior de Costa Rica. Especializado en aplicaciones educativas y turísticas con Next.js, React, Supabase y TypeScript.",
+    "Portafolio de Greikol Q.A, desarrollador web junior de Costa Rica. Especializado en aplicaciones educativas y turísticas con Next.js, React, Supabase y TypeScript.",
   keywords: [
     "desarrollador web",
     "Costa Rica",

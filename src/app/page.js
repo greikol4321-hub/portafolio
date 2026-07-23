@@ -122,7 +122,7 @@ function Header() {
     >
       <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 md:px-6">
         <span className="text-sm font-semibold tracking-tight text-stone-100">
-          Greikol
+          Greikol Q.A
         </span>
         <div className="hidden items-center gap-8 text-sm text-stone-400 md:flex">
           {links.map((item) => (
@@ -538,6 +538,17 @@ function ContactSection() {
             <motion.a
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              href="tel:+50661161249"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-stone-700 px-8 text-sm font-medium text-stone-300 transition-all hover:border-stone-600 hover:bg-stone-800 sm:w-auto"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              +506 6116 1249
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               href="https://github.com/greikol4321-hub"
               target="_blank"
               rel="noopener noreferrer"
@@ -563,7 +574,7 @@ function Footer() {
   return (
     <footer className="border-t border-stone-800/50 px-5 py-8 md:px-6">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 text-xs text-stone-600 sm:flex-row">
-        <p>&copy; {new Date().getFullYear()} Greikol &mdash; Costa Rica</p>
+        <p>&copy; {new Date().getFullYear()} Greikol Q.A &mdash; Costa Rica</p>
         <p>
           Hecho con Next.js, Tailwind CSS y{" "}
           <a
