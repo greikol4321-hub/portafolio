@@ -11,24 +11,7 @@ const projects = [
     tags: ["Next.js 16", "Supabase", "Tailwind v4", "TypeScript", "i18n"],
     href: "https://github.com/greikol4321-hub/jungle-wildlife-tours",
     hrefDemo: "https://jungle-wildlife-tours.vercel.app",
-    status: "En desarrollo",
-  },
-  {
-    title: "CTP de Matapalo",
-    description:
-      "Sitio web institucional completo con boletas disciplinarias notificadas por EmailJS, galería híbrida con Supabase, comunicados, autenticación por roles y diseño responsivo.",
-    tags: ["HTML/CSS/JS", "Supabase", "EmailJS", "Vercel"],
-    href: "https://github.com/melissafrutosumana-ctrl/Cole",
-    hrefDemo: "https://cole-xi.vercel.app",
     status: "Completado",
-  },
-  {
-    title: "Evaluación de Ferias MEP",
-    description:
-      "Sistema para evaluar proyectos en ferias educativas del Ministerio de Educación. Login por roles, gestión de proyectos, asignación de jueces, puntajes y observaciones por tipo de feria.",
-    tags: ["JavaScript ES6", "ES Modules", "Vercel", "CSS3"],
-    href: "https://github.com/melissafrutosumana-ctrl/EvaluacionFerias",
-    status: "En desarrollo",
   },
 ];
 
