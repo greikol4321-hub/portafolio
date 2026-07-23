@@ -12,27 +12,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Greikol | Portafolio - Desarrollador Web",
+  title: "Greikol | Desarrollador Web - Costa Rica",
   description:
-    "Portafolio de Greikol, desarrollador web junior especializado en sistemas educativos y aplicaciones con Next.js, React y Supabase en Costa Rica.",
+    "Portafolio de Greikol, desarrollador web junior de Costa Rica. Especializado en aplicaciones educativas y turísticas con Next.js, React, Supabase y TypeScript.",
   keywords: [
     "desarrollador web",
     "Costa Rica",
     "Next.js",
     "React",
+    "Supabase",
     "portafolio",
-    "programador junior",
+    "programador",
   ],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="es"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased">
+    <html lang="es" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-accent selection:text-stone-950">
         {children}
       </body>
     </html>
