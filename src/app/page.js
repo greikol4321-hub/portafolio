@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "motion/react";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView, AnimatePresence, useReducedMotion } from "motion/react";
 
 const projects = [
   {
@@ -177,39 +177,68 @@ function Header() {
 }
 
 function Hero() {
+  const rm = useReducedMotion();
+
+  const containerVariants = rm
+    ? {}
+    : {
+        visible: {
+          transition: { staggerChildren: 0.1, delayChildren: 0.15 },
+        },
+      };
+
+  const childVariants = rm
+    ? {}
+    : {
+        hidden: { opacity: 0, y: 24 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] },
+        },
+      };
+
   return (
     <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-5 pt-14 md:px-6">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-accent-dim/5 blur-[128px]" />
-        <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-emerald-500/5 blur-[128px]" />
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <svg className="h-full w-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="dot-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="1.5" cy="1.5" r="0.75" fill="#a8a29e" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dot-grid)" />
+        </svg>
       </div>
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
+        variants={containerVariants}
+        initial={rm ? { opacity: 1 } : "hidden"}
+        animate="visible"
         className="relative mx-auto max-w-3xl text-center"
       >
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          variants={childVariants}
           className="mb-5 text-[10px] font-medium uppercase tracking-[0.25em] text-accent md:text-xs"
         >
           Desarrollador Web Junior
         </motion.p>
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          variants={childVariants}
           className="mb-6 text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[1.1] tracking-tight"
         >
           Construyo software que
-          <span className="block text-accent">resuelve problemas reales</span>
+          <span className="relative mt-1 block text-accent">
+            resuelve problemas reales
+            <motion.span
+              className="absolute -bottom-0.5 left-0 h-[2px] bg-accent"
+              initial={rm ? { width: "100%" } : { width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 0.6, delay: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+            />
+          </span>
         </motion.h1>
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          variants={childVariants}
           className="mx-auto mb-10 max-w-xl text-sm leading-relaxed text-stone-400 md:text-base"
         >
           Costarricense, autodidacta y enfocado. Convierto necesidades
@@ -217,23 +246,25 @@ function Hero() {
           tecnologías modernas.
         </motion.p>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
+          variants={childVariants}
           className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
         >
-          <a
+          <motion.a
+            whileHover={rm ? {} : { scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             href="#proyectos"
-            className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-accent px-6 text-sm font-medium text-stone-950 transition-all hover:bg-emerald-400 active:scale-[0.97] sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-accent px-6 text-sm font-medium text-stone-950 shadow-lg shadow-accent/15 transition-shadow hover:bg-emerald-400 hover:shadow-xl hover:shadow-accent/25 sm:w-auto"
           >
             Ver proyectos
-          </a>
-          <a
+          </motion.a>
+          <motion.a
+            whileHover={rm ? {} : { scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             href="#contacto"
-            className="inline-flex h-11 w-full items-center justify-center rounded-lg border border-stone-700 px-6 text-sm font-medium text-stone-300 transition-all hover:border-stone-600 hover:bg-stone-800 active:scale-[0.97] sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center rounded-lg border border-stone-700 px-6 text-sm font-medium text-stone-300 shadow-lg shadow-black/10 transition-shadow hover:border-stone-600 hover:bg-stone-800 hover:shadow-xl hover:shadow-black/20 sm:w-auto"
           >
             Contactar
-          </a>
+          </motion.a>
         </motion.div>
       </motion.div>
     </section>
@@ -311,6 +342,36 @@ function About() {
   );
 }
 
+function AnimatedCounter({ raw }) {
+  const rm = useReducedMotion();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [count, setCount] = useState(0);
+  const target = parseInt(raw.replace(/[^0-9]/g, ""), 10);
+  const suffix = raw.replace(/[0-9]/g, "");
+
+  useEffect(() => {
+    if (!isInView) return;
+    if (rm) { setCount(target); return; }
+    const dur = 1500;
+    const start = performance.now();
+    let raf;
+    function tick(now) {
+      const t = Math.min((now - start) / dur, 1);
+      setCount(Math.floor(t * target));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    }
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [isInView, target, rm]);
+
+  return (
+    <span ref={ref} className="mb-1 text-2xl font-bold text-accent md:text-4xl">
+      {count}{suffix}
+    </span>
+  );
+}
+
 function Stats() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -334,9 +395,7 @@ function Stats() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="flex flex-col items-center justify-center bg-stone-950 px-3 py-8 text-center md:px-4 md:py-10"
             >
-              <span className="mb-1 text-2xl font-bold text-accent md:text-4xl">
-                {stat.value}
-              </span>
+              <AnimatedCounter raw={stat.value} />
               <span className="text-[10px] text-stone-500 md:text-xs">{stat.label}</span>
             </motion.div>
           ))}
