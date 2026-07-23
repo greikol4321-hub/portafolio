@@ -19,6 +19,7 @@ const projects = [
       "Sitio web institucional con boletas, galería, comunicados y autenticación por roles.",
     tags: ["HTML/CSS/JS", "Supabase", "EmailJS", "Vercel"],
     href: "https://github.com/melissafrutosumana-ctrl/Cole",
+    hrefDemo: "https://cole-xi.vercel.app/index.html",
     status: "Completado",
   },
 ];
