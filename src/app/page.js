@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView, AnimatePresence, useReducedMotion } from "motion/react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { motion, useInView, AnimatePresence } from "motion/react";
 
 const projects = [
   {
@@ -177,26 +177,10 @@ function Header() {
 }
 
 function Hero() {
-  const rm = useReducedMotion();
-
-  const containerVariants = rm
-    ? {}
-    : {
-        visible: {
-          transition: { staggerChildren: 0.1, delayChildren: 0.15 },
-        },
-      };
-
-  const childVariants = rm
-    ? {}
-    : {
-        hidden: { opacity: 0, y: 24 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] },
-        },
-      };
+  const [rm, setRm] = useState(false);
+  useEffect(() => {
+    setRm(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
 
   return (
     <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-5 pt-14 md:px-6">
@@ -211,34 +195,34 @@ function Hero() {
         </svg>
       </div>
       <motion.div
-        variants={containerVariants}
-        initial={rm ? { opacity: 1 } : "hidden"}
-        animate="visible"
+        initial={rm ? false : { opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
         className="relative mx-auto max-w-3xl text-center"
       >
         <motion.p
-          variants={childVariants}
+          initial={rm ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: rm ? 0 : 0.15 }}
           className="mb-5 text-[10px] font-medium uppercase tracking-[0.25em] text-accent md:text-xs"
         >
           Desarrollador Web Junior
         </motion.p>
         <motion.h1
-          variants={childVariants}
+          initial={rm ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: rm ? 0 : 0.25 }}
           className="mb-6 text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[1.1] tracking-tight"
         >
           Construyo software que
-          <span className="relative mt-1 block text-accent">
+          <span className="mt-1 block text-accent">
             resuelve problemas reales
-            <motion.span
-              className="absolute -bottom-0.5 left-0 h-[2px] bg-accent"
-              initial={rm ? { width: "100%" } : { width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 0.6, delay: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-            />
           </span>
         </motion.h1>
         <motion.p
-          variants={childVariants}
+          initial={rm ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: rm ? 0 : 0.35 }}
           className="mx-auto mb-10 max-w-xl text-sm leading-relaxed text-stone-400 md:text-base"
         >
           Costarricense, autodidacta y enfocado. Convierto necesidades
@@ -246,7 +230,9 @@ function Hero() {
           tecnologías modernas.
         </motion.p>
         <motion.div
-          variants={childVariants}
+          initial={rm ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: rm ? 0 : 0.45 }}
           className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
         >
           <motion.a
@@ -343,12 +329,16 @@ function About() {
 }
 
 function AnimatedCounter({ raw }) {
-  const rm = useReducedMotion();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [count, setCount] = useState(0);
+  const [rm, setRm] = useState(false);
   const target = parseInt(raw.replace(/[^0-9]/g, ""), 10);
   const suffix = raw.replace(/[0-9]/g, "");
+
+  useEffect(() => {
+    setRm(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
 
   useEffect(() => {
     if (!isInView) return;
