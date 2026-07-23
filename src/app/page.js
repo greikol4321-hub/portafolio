@@ -555,7 +555,7 @@ function ContactSection() {
             <motion.a
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              href="mailto:greikol4321@gmail.com"
+              href="mailto:greikolamador@gmail.com"
               className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent px-8 text-sm font-medium text-stone-950 transition-all hover:bg-emerald-400 sm:w-auto"
             >
               <svg
@@ -571,7 +571,7 @@ function ContactSection() {
                   d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
                 />
               </svg>
-              greikol4321@gmail.com
+              greikolamador@gmail.com
             </motion.a>
             <motion.a
               whileHover={{ scale: 1.02 }}
