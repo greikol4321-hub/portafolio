@@ -208,9 +208,8 @@ function Hero() {
           transition={{ duration: 0.6, delay: rm ? 0 : 0.35 }}
           className="mx-auto mb-10 max-w-xl text-sm leading-relaxed text-stone-400 md:text-base"
         >
-          Costarricense, autodidacta y enfocado. Convierto necesidades
-          institucionales y de negocio en aplicaciones web funcionales con
-          tecnologías modernas.
+          Costarricense, autodidacta y enfocado. Convierto ideas en
+          aplicaciones web funcionales con tecnologías modernas.
         </motion.p>
         <motion.div
           initial={rm ? false : { opacity: 0, y: 20 }}
@@ -262,14 +261,14 @@ function About() {
               <p>
                 Soy un desarrollador web junior apasionado por crear
                 aplicaciones que realmente se usan. Mi enfoque está en construir
-                software funcional, bien diseñado y accesible, principalmente
-                para el sector educativo y turístico en Costa Rica.
+                software funcional, bien diseñado y accesible para el
+                sector turístico en Costa Rica.
               </p>
               <p>
-                He trabajado en proyectos para colegios técnicos profesionales
-                (CTP), el Ministerio de Educación Pública y emprendimientos
-                locales, desarrollando desde sistemas de votación estudiantil
-                hasta paneles administrativos completos.
+                He desarrollado paneles administrativos, sitios web
+                institucionales y sistemas a medida para emprendimientos
+                turísticos locales, combinando funcionalidad con una
+                experiencia de usuario pensada para cada proyecto.
               </p>
               <p>
                 Trabajo con Next.js, React, Supabase y Tailwind CSS como stack
@@ -351,15 +350,13 @@ function Stats() {
 
   const stats = [
     { value: "6", label: "Proyectos en GitHub" },
-    { value: "4", label: "Instituciones educativas" },
-    { value: "3", label: "Tecnologías del stack" },
     { value: "100%", label: "Código desde cero" },
   ];
 
   return (
     <section ref={ref} className="border-t border-stone-800/50 px-5 py-14 md:px-6 md:py-20">
       <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-2 divide-x divide-stone-800 overflow-hidden rounded-xl border border-stone-800 bg-stone-900 md:grid-cols-4">
+        <div className="mx-auto grid max-w-md grid-cols-2 divide-x divide-stone-800 overflow-hidden rounded-xl border border-stone-800 bg-stone-900">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
