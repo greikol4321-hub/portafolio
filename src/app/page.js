@@ -113,7 +113,10 @@ function Header() {
       className="fixed top-0 z-50 w-full border-b border-stone-800/50 bg-stone-950/70 backdrop-blur-xl"
     >
       <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 md:px-6">
-        <span className="text-sm font-semibold tracking-tight text-stone-100">
+        <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-stone-100">
+          <svg className="h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7l5 5-5 5M12 19l7 0" />
+          </svg>
           Greikol Q.A
         </span>
         <div className="hidden items-center gap-8 text-sm text-stone-400 md:flex">
