@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "motion/react";
+import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "motion/react";
 
 const projects = [
   {
@@ -49,7 +49,7 @@ const techSkills = [
 
 function FadeIn({ children, delay = 0, direction = "up", className = "" }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
   const dir = {
     up: { y: 40 },
     down: { y: -40 },
@@ -106,6 +106,13 @@ export default function Home() {
 }
 
 function Header() {
+  const [open, setOpen] = useState(false);
+  const links = [
+    { label: "Sobre mí", href: "#sobre-mi" },
+    { label: "Proyectos", href: "#proyectos" },
+    { label: "Skills", href: "#skills" },
+    { label: "Contacto", href: "#contacto" },
+  ];
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
@@ -113,20 +120,12 @@ function Header() {
       transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
       className="fixed top-0 z-50 w-full border-b border-stone-800/50 bg-stone-950/70 backdrop-blur-xl"
     >
-      <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-        <motion.span
-          whileHover={{ scale: 1.02 }}
-          className="text-sm font-semibold tracking-tight text-stone-100"
-        >
+      <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 md:px-6">
+        <span className="text-sm font-semibold tracking-tight text-stone-100">
           Greikol
-        </motion.span>
-        <div className="flex items-center gap-8 text-sm text-stone-400">
-          {[
-            { label: "Sobre mí", href: "#sobre-mi" },
-            { label: "Proyectos", href: "#proyectos" },
-            { label: "Skills", href: "#skills" },
-            { label: "Contacto", href: "#contacto" },
-          ].map((item) => (
+        </span>
+        <div className="hidden items-center gap-8 text-sm text-stone-400 md:flex">
+          {links.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -136,14 +135,50 @@ function Header() {
             </a>
           ))}
         </div>
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex items-center text-stone-400 md:hidden"
+          aria-label="Menú"
+        >
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+            {open ? (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            )}
+          </svg>
+        </button>
       </nav>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden border-t border-stone-800/50 md:hidden"
+          >
+            <div className="flex flex-col gap-1 px-5 py-4">
+              {links.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2 text-sm text-stone-400 transition-colors hover:bg-stone-800 hover:text-accent"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }
 
 function Hero() {
   return (
-    <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-6 pt-14">
+    <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-5 pt-14 md:px-6">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-accent-dim/5 blur-[128px]" />
         <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-emerald-500/5 blur-[128px]" />
@@ -158,7 +193,7 @@ function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mb-5 text-xs font-medium uppercase tracking-[0.25em] text-accent"
+          className="mb-5 text-[10px] font-medium uppercase tracking-[0.25em] text-accent md:text-xs"
         >
           Desarrollador Web Junior
         </motion.p>
@@ -166,17 +201,16 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-6 text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl"
+          className="mb-6 text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[1.1] tracking-tight"
         >
           Construyo software que
-          <br />
-          <span className="text-accent">resuelve problemas reales</span>
+          <span className="block text-accent">resuelve problemas reales</span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-stone-400"
+          className="mx-auto mb-10 max-w-xl text-sm leading-relaxed text-stone-400 md:text-base"
         >
           Costarricense, autodidacta y enfocado. Convierto necesidades
           institucionales y de negocio en aplicaciones web funcionales con
@@ -186,17 +220,17 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="flex items-center justify-center gap-4"
+          className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
         >
           <a
             href="#proyectos"
-            className="inline-flex h-11 items-center rounded-lg bg-accent px-6 text-sm font-medium text-stone-950 transition-all hover:bg-emerald-400 active:scale-[0.97]"
+            className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-accent px-6 text-sm font-medium text-stone-950 transition-all hover:bg-emerald-400 active:scale-[0.97] sm:w-auto"
           >
             Ver proyectos
           </a>
           <a
             href="#contacto"
-            className="inline-flex h-11 items-center rounded-lg border border-stone-700 px-6 text-sm font-medium text-stone-300 transition-all hover:border-stone-600 hover:bg-stone-800 active:scale-[0.97]"
+            className="inline-flex h-11 w-full items-center justify-center rounded-lg border border-stone-700 px-6 text-sm font-medium text-stone-300 transition-all hover:border-stone-600 hover:bg-stone-800 active:scale-[0.97] sm:w-auto"
           >
             Contactar
           </a>
@@ -208,25 +242,21 @@ function Hero() {
 
 function About() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   return (
-    <section
-      id="sobre-mi"
-      ref={ref}
-      className="border-t border-stone-800/50 px-6 py-28"
-    >
+    <section id="sobre-mi" ref={ref} className="border-t border-stone-800/50 px-5 py-16 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
         <FadeIn delay={0.1}>
           <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-accent">
             Sobre mí
           </p>
-          <h2 className="mb-8 text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mb-6 text-2xl font-bold tracking-tight md:mb-8 md:text-4xl">
             Desarrollador web de{" "}
             <span className="text-accent">Costa Rica</span>
           </h2>
         </FadeIn>
-        <div className="grid gap-12 md:grid-cols-2">
+        <div className="grid gap-8 md:gap-12 md:grid-cols-2">
           <FadeIn delay={0.2} direction="right">
             <div className="space-y-4 text-sm leading-relaxed text-stone-400">
               <p>
@@ -250,7 +280,7 @@ function About() {
             </div>
           </FadeIn>
           <FadeIn delay={0.3} direction="left">
-            <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-6">
+            <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-5 md:p-6">
               <h3 className="mb-4 text-sm font-semibold text-stone-200">
                 Lo que busco
               </h3>
@@ -283,31 +313,31 @@ function About() {
 
 function Stats() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   const stats = [
-      { value: "6", label: "Proyectos en GitHub" },
+    { value: "6", label: "Proyectos en GitHub" },
     { value: "4", label: "Instituciones educativas" },
     { value: "3", label: "Tecnologías del stack" },
     { value: "100%", label: "Código desde cero" },
   ];
 
   return (
-    <section ref={ref} className="border-t border-stone-800/50 px-6 py-20">
+    <section ref={ref} className="border-t border-stone-800/50 px-5 py-14 md:px-6 md:py-20">
       <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-2 gap-px divide-x divide-stone-800 overflow-hidden rounded-xl border border-stone-800 bg-stone-900 md:grid-cols-4">
+        <div className="grid grid-cols-2 divide-x divide-stone-800 overflow-hidden rounded-xl border border-stone-800 bg-stone-900 md:grid-cols-4">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="flex flex-col items-center justify-center bg-stone-950 px-4 py-10 text-center"
+              className="flex flex-col items-center justify-center bg-stone-950 px-3 py-8 text-center md:px-4 md:py-10"
             >
-              <span className="mb-1 text-3xl font-bold text-accent md:text-4xl">
+              <span className="mb-1 text-2xl font-bold text-accent md:text-4xl">
                 {stat.value}
               </span>
-              <span className="text-xs text-stone-500">{stat.label}</span>
+              <span className="text-[10px] text-stone-500 md:text-xs">{stat.label}</span>
             </motion.div>
           ))}
         </div>
@@ -318,28 +348,27 @@ function Stats() {
 
 function ProjectsSection() {
   return (
-    <section id="proyectos" className="border-t border-stone-800/50 px-6 py-28">
+    <section id="proyectos" className="border-t border-stone-800/50 px-5 py-16 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
         <FadeIn delay={0.1}>
           <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-accent">
             Trabajos
           </p>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mb-4 text-2xl font-bold tracking-tight md:text-4xl">
             Proyectos destacados
           </h2>
-          <p className="mb-14 max-w-lg text-sm leading-relaxed text-stone-400">
+          <p className="mb-10 max-w-lg text-sm leading-relaxed text-stone-400 md:mb-14">
             Una selección de los sistemas web que he desarrollado, desde
-            portales educativos hasta plataformas turísticas. Cada proyecto
-            resuelve un problema específico para sus usuarios.
+            portales educativos hasta plataformas turísticas.
           </p>
         </FadeIn>
-        <StaggerList className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <StaggerList className="grid gap-4 md:gap-5 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
         </StaggerList>
         <FadeIn delay={0.4}>
-          <div className="mt-12 text-center">
+          <div className="mt-10 text-center md:mt-12">
             <a
               href="https://github.com/greikol4321-hub"
               target="_blank"
@@ -367,7 +396,7 @@ function ProjectCard({ project }) {
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative flex flex-col rounded-xl border border-stone-800 bg-stone-900/50 p-6 transition-colors hover:border-stone-700 hover:bg-stone-900"
+      className="group relative flex flex-col rounded-xl border border-stone-800 bg-stone-900/50 p-5 transition-colors hover:border-stone-700 hover:bg-stone-900 md:p-6"
     >
       <div className="mb-1 flex items-center gap-2">
         <span className="h-2 w-2 rounded-full bg-accent/60" />
@@ -423,17 +452,17 @@ function ProjectCard({ project }) {
 
 function SkillsSection() {
   return (
-    <section id="skills" className="border-t border-stone-800/50 px-6 py-28">
+    <section id="skills" className="border-t border-stone-800/50 px-5 py-16 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
         <FadeIn delay={0.1}>
           <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-accent">
             Stack
           </p>
-          <h2 className="mb-14 text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mb-10 text-2xl font-bold tracking-tight md:mb-14 md:text-4xl">
             Tecnologías que domino
           </h2>
         </FadeIn>
-        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {techSkills.map((skill, i) => (
             <SkillBar key={skill.name} skill={skill} index={i} />
           ))}
@@ -445,7 +474,7 @@ function SkillsSection() {
 
 function SkillBar({ skill, index }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
   return (
     <div
       ref={ref}
@@ -469,16 +498,13 @@ function SkillBar({ skill, index }) {
 
 function ContactSection() {
   return (
-    <section
-      id="contacto"
-      className="border-t border-stone-800/50 px-6 py-28"
-    >
+    <section id="contacto" className="border-t border-stone-800/50 px-5 py-16 md:px-6 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
         <FadeIn delay={0.1}>
           <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-accent">
             Contacto
           </p>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mb-4 text-2xl font-bold tracking-tight md:text-4xl">
             ¿Tienes un proyecto en mente?
           </h2>
           <p className="mb-10 text-sm leading-relaxed text-stone-400">
@@ -487,7 +513,7 @@ function ContactSection() {
           </p>
         </FadeIn>
         <FadeIn delay={0.2}>
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
             <motion.a
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -535,7 +561,7 @@ function ContactSection() {
 
 function Footer() {
   return (
-    <footer className="border-t border-stone-800/50 px-6 py-8">
+    <footer className="border-t border-stone-800/50 px-5 py-8 md:px-6">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 text-xs text-stone-600 sm:flex-row">
         <p>&copy; {new Date().getFullYear()} Greikol &mdash; Costa Rica</p>
         <p>
