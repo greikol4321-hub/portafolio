@@ -13,6 +13,14 @@ const projects = [
     hrefDemo: "https://jungle-wildlife-tours.vercel.app",
     status: "Completado",
   },
+  {
+    title: "CTP de Matapalo",
+    description:
+      "Sitio web institucional con boletas, galería, comunicados y autenticación por roles.",
+    tags: ["HTML/CSS/JS", "Supabase", "EmailJS", "Vercel"],
+    href: "https://github.com/melissafrutosumana-ctrl/Cole",
+    status: "Completado",
+  },
 ];
 
 const techSkills = [
