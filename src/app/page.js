@@ -10,6 +10,7 @@ const projects = [
       "Panel administrativo para operador turístico de vida silvestre. CRUD de tours con imágenes vía Supabase Storage, moderación de reseñas, gestión de contactos y dashboard tipo admin diario.",
     tags: ["Next.js 16", "Supabase", "Tailwind v4", "TypeScript", "i18n"],
     href: "https://github.com/greikol4321-hub/jungle-wildlife-tours",
+    hrefDemo: "https://jungle-wildlife-tours.vercel.app",
     status: "En desarrollo",
   },
   {
@@ -18,6 +19,7 @@ const projects = [
       "Sitio web institucional completo con boletas disciplinarias notificadas por EmailJS, galería híbrida con Supabase, comunicados, autenticación por roles y diseño responsivo.",
     tags: ["HTML/CSS/JS", "Supabase", "EmailJS", "Vercel"],
     href: "https://github.com/melissafrutosumana-ctrl/Cole",
+    hrefDemo: "https://cole-xi.vercel.app",
     status: "Completado",
   },
   {
@@ -27,30 +29,6 @@ const projects = [
     tags: ["JavaScript ES6", "ES Modules", "Vercel", "CSS3"],
     href: "https://github.com/melissafrutosumana-ctrl/EvaluacionFerias",
     status: "En desarrollo",
-  },
-  {
-    title: "CTP Quepos Notificaciones",
-    description:
-      "Sistema de notificaciones institucionales: ausencias docentes vía WhatsApp (CallMeBot), comunicados por EmailJS, galería Supabase y autenticación con roles jerárquicos.",
-    tags: ["Next.js 15", "Supabase", "Tailwind v4", "Phosphor Icons"],
-    href: "https://github.com/greikol4321-hub/Notificaciones-CTP-De-Quepos",
-    status: "En desarrollo",
-  },
-  {
-    title: "Horizonte Educativo Integral",
-    description:
-      "Sitio profesional para MSc. en educación con catálogo dinámico de 9 cursos desde JSON, animaciones Canvas en hero, formulario de contacto y WhatsApp Business.",
-    tags: ["HTML/CSS/JS", "Canvas API", "Responsive", "Playwright"],
-    href: "https://github.com/greikol4321-hub/Horizonte-Educativo-Integral",
-    status: "En espera",
-  },
-  {
-    title: "Votaciones Escuela Corea",
-    description:
-      "Sistema electoral estudiantil con 3 partidos, confirmación modal, bloqueo por contraseña entre votos, modo administrador y envío de resultados a Google Sheets.",
-    tags: ["JavaScript", "Google Apps Script", "HTML/CSS"],
-    href: "https://github.com/greikol4321-hub/Votaciones_Corea",
-    status: "Completado",
   },
 ];
 
@@ -308,7 +286,7 @@ function Stats() {
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   const stats = [
-    { value: "6+", label: "Proyectos entregados" },
+      { value: "6", label: "Proyectos en GitHub" },
     { value: "4", label: "Instituciones educativas" },
     { value: "3", label: "Tecnologías del stack" },
     { value: "100%", label: "Código desde cero" },
@@ -386,10 +364,7 @@ function ProjectsSection() {
 
 function ProjectCard({ project }) {
   return (
-    <motion.a
-      href={project.href}
-      target="_blank"
-      rel="noopener noreferrer"
+    <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="group relative flex flex-col rounded-xl border border-stone-800 bg-stone-900/50 p-6 transition-colors hover:border-stone-700 hover:bg-stone-900"
@@ -406,7 +381,7 @@ function ProjectCard({ project }) {
       <p className="mb-5 text-sm leading-relaxed text-stone-400">
         {project.description}
       </p>
-      <div className="mt-auto flex flex-wrap gap-1.5">
+      <div className="mb-4 flex flex-wrap gap-1.5">
         {project.tags.map((tag) => (
           <span
             key={tag}
@@ -416,7 +391,33 @@ function ProjectCard({ project }) {
           </span>
         ))}
       </div>
-    </motion.a>
+      <div className="mt-auto flex items-center gap-3">
+        <a
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-400 transition-colors hover:text-accent"
+        >
+          <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          Código
+        </a>
+        {project.hrefDemo && (
+          <a
+            href={project.hrefDemo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-400 transition-colors hover:text-accent"
+          >
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+            Demo
+          </a>
+        )}
+      </div>
+    </motion.div>
   );
 }
 
