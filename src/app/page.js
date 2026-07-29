@@ -1,13 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "motion/react";
 
 const projects = [
   {
     title: "Jungle Wildlife Tours",
     description:
-      "Panel administrativo para operador turístico de vida silvestre. CRUD de tours con imágenes vía Supabase Storage, moderación de reseñas, gestión de contactos y dashboard tipo admin diario.",
+      "Panel administrativo para operador turístico. CRUD de tours con imágenes, moderación de reseñas, gestión de contactos y dashboard diario.",
     tags: ["Next.js 16", "Supabase", "Tailwind v4", "TypeScript", "i18n"],
     href: "https://github.com/greikol4321-hub/jungle-wildlife-tours",
     hrefDemo: "https://jungle-wildlife-tours.vercel.app",
@@ -16,7 +16,7 @@ const projects = [
   {
     title: "CTP de Matapalo",
     description:
-      "Sitio web institucional con boletas, galería, comunicados y autenticación por roles.",
+      "Portal institucional con boletas, galería, comunicados oficiales y autenticación por roles para la comunidad educativa.",
     tags: ["HTML/CSS/JS", "Supabase", "EmailJS", "Vercel"],
     href: "https://github.com/melissafrutosumana-ctrl/Cole",
     hrefDemo: "https://cole-xi.vercel.app/index.html",
@@ -99,6 +99,13 @@ export default function Home() {
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const links = [
     { label: "Sobre mí", href: "#sobre-mi" },
     { label: "Proyectos", href: "#proyectos" },
@@ -110,7 +117,11 @@ function Header() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-      className="fixed top-0 z-50 w-full border-b border-stone-800/50 bg-stone-950/70 backdrop-blur-xl"
+      className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
+        scrolled
+          ? "border-stone-800/60 bg-stone-950/80 backdrop-blur-2xl"
+          : "border-transparent bg-stone-950/70 backdrop-blur-md"
+      }`}
     >
       <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 md:px-6">
         <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-stone-100">
@@ -171,6 +182,16 @@ function Header() {
   );
 }
 
+function GlowOrb({ className = "" }) {
+  return (
+    <motion.div
+      animate={{ opacity: [0.15, 0.25, 0.15], scale: [1, 1.05, 1] }}
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      className={`pointer-events-none absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-accent blur-[120px] ${className}`}
+    />
+  );
+}
+
 function Hero() {
   const [rm, setRm] = useState(false);
   useEffect(() => {
@@ -179,6 +200,7 @@ function Hero() {
 
   return (
     <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-5 pt-14 md:px-6">
+      <GlowOrb />
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <svg className="h-full w-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -201,7 +223,7 @@ function Hero() {
           transition={{ duration: 0.5, delay: rm ? 0 : 0.15 }}
           className="mb-5 text-[10px] font-medium uppercase tracking-[0.25em] text-accent md:text-xs"
         >
-          Desarrollador Web Junior
+          Desarrollador Web Full-Stack
         </motion.p>
         <motion.h1
           initial={rm ? false : { opacity: 0, y: 20 }}
@@ -210,7 +232,7 @@ function Hero() {
           className="mb-6 text-[clamp(1.75rem,7vw,4.5rem)] font-bold leading-[1.1] tracking-tight"
         >
           Construyo software que
-          <span className="mt-1 block text-accent">
+          <span className="mt-1 block bg-gradient-to-r from-accent via-emerald-300 to-accent bg-clip-text text-transparent">
             resuelve problemas reales
           </span>
         </motion.h1>
@@ -220,8 +242,9 @@ function Hero() {
           transition={{ duration: 0.6, delay: rm ? 0 : 0.35 }}
           className="mx-auto mb-10 max-w-xl text-sm leading-relaxed text-stone-400 md:text-base"
         >
-          Costarricense, autodidacta y enfocado. Convierto ideas en
-          aplicaciones web funcionales con tecnologías modernas.
+          Costarricense, autodidacta y enfocado en crear aplicaciones web
+          funcionales con tecnologías modernas. Cada línea de código
+          busca resolver algo real.
         </motion.p>
         <motion.div
           initial={rm ? false : { opacity: 0, y: 20 }}
@@ -233,15 +256,18 @@ function Hero() {
             whileHover={rm ? {} : { scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             href="#proyectos"
-            className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-accent px-6 text-sm font-medium text-stone-950 shadow-lg shadow-accent/15 transition-shadow hover:bg-emerald-400 hover:shadow-xl hover:shadow-accent/25 sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-accent px-6 text-sm font-medium text-stone-950 shadow-lg shadow-accent/15 transition-all hover:bg-emerald-400 hover:shadow-xl hover:shadow-accent/25 sm:w-auto"
           >
             Ver proyectos
+            <svg className="ml-1.5 h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
           </motion.a>
           <motion.a
             whileHover={rm ? {} : { scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             href="#contacto"
-            className="inline-flex h-11 w-full items-center justify-center rounded-lg border border-stone-700 px-6 text-sm font-medium text-stone-300 shadow-lg shadow-black/10 transition-shadow hover:border-stone-600 hover:bg-stone-800 hover:shadow-xl hover:shadow-black/20 sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center rounded-lg border border-stone-700 px-6 text-sm font-medium text-stone-300 transition-all hover:border-stone-600 hover:bg-stone-800 sm:w-auto"
           >
             Contactar
           </motion.a>
@@ -263,7 +289,7 @@ function About() {
             Sobre mí
           </p>
           <h2 className="mb-6 text-2xl font-bold tracking-tight md:mb-8 md:text-4xl">
-            Desarrollador web de{" "}
+            Desarrollador web desde{" "}
             <span className="text-accent">Costa Rica</span>
           </h2>
         </FadeIn>
@@ -271,36 +297,36 @@ function About() {
           <FadeIn delay={0.2} direction="right">
             <div className="space-y-4 text-sm leading-relaxed text-stone-400">
               <p>
-                Soy un desarrollador web junior apasionado por crear
-                aplicaciones que realmente se usan. Mi enfoque está en construir
-                software funcional, bien diseñado y accesible para el
-                sector turístico en Costa Rica.
+                Soy desarrollador web junior apasionado por crear
+                aplicaciones que la gente usa todos los días. Mi enfoque
+                está en construir software funcional, bien diseñado y
+                accesible para el sector turístico en Costa Rica.
               </p>
               <p>
-                He desarrollado paneles administrativos, sitios web
+                He desarrollado paneles administrativos, portales
                 institucionales y sistemas a medida para emprendimientos
-                turísticos locales, combinando funcionalidad con una
+                turísticos locales — combinando funcionalidad con una
                 experiencia de usuario pensada para cada proyecto.
               </p>
               <p>
-                Trabajo con Next.js, React, Supabase y Tailwind CSS como stack
-                principal, y busco constantemente aprender y mejorar mi
-                oficio. Creo en el código limpio, la accesibilidad y las
-                interfaces que ponen al usuario primero.
+                Mi stack principal es Next.js, React, Supabase y Tailwind
+                CSS, y busco constantemente aprender y mejorar mi oficio.
+                Creo en el código limpio, la accesibilidad y las
+                interfaces que le hacen la vida más fácil al usuario.
               </p>
             </div>
           </FadeIn>
           <FadeIn delay={0.3} direction="left">
-            <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-5 md:p-6">
+            <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-5 backdrop-blur-sm md:p-6">
               <h3 className="mb-4 text-sm font-semibold text-stone-200">
                 Lo que busco
               </h3>
               <ul className="space-y-3 text-sm text-stone-400">
                 {[
-                  "Oportunidades para crecer como desarrollador profesional",
+                  "Crecer como desarrollador profesional en un equipo real",
                   "Proyectos donde pueda aplicar y expandir mi stack técnico",
-                  "Colaborar en equipos que valoren la calidad del código",
-                  "Seguir construyendo software que tenga impacto real",
+                  "Colaborar con gente que valore el código de calidad",
+                  "Seguir construyendo software que tenga impacto",
                 ].map((item, i) => (
                   <motion.li
                     key={i}
@@ -399,7 +425,7 @@ function ProjectsSection() {
             Proyectos destacados
           </h2>
           <p className="mb-10 max-w-lg text-sm leading-relaxed text-stone-400 md:mb-14">
-            Una selección de los sistemas web que he desarrollado, desde
+            Sistemas web que he desarrollado de principio a fin — desde
             portales educativos hasta plataformas turísticas.
           </p>
         </FadeIn>
@@ -435,17 +461,18 @@ function ProjectsSection() {
 function ProjectCard({ project }) {
   return (
     <motion.div
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative flex flex-col rounded-xl border border-stone-800 bg-stone-900/50 p-5 transition-colors hover:border-stone-700 hover:bg-stone-900 md:p-6"
+      className="group relative flex flex-col rounded-xl border border-stone-800 bg-stone-900/50 p-5 transition-all duration-300 hover:border-accent/30 hover:bg-stone-900 hover:shadow-lg hover:shadow-accent/5 md:p-6"
     >
+      <div className="absolute inset-0 -z-10 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: "0 0 30px color-mix(in srgb, #34d399 10%, transparent)" }} />
       <div className="mb-1 flex items-center gap-2">
         <span className="h-2 w-2 rounded-full bg-accent/60" />
         <span className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
           {project.status}
         </span>
       </div>
-      <h3 className="mb-3 text-base font-semibold text-stone-200 transition-colors group-hover:text-accent">
+      <h3 className="mb-3 text-base font-semibold text-stone-200 transition-colors duration-300 group-hover:text-accent">
         {project.title}
       </h3>
       <p className="mb-5 text-sm leading-relaxed text-stone-400">
@@ -455,7 +482,7 @@ function ProjectCard({ project }) {
         {project.tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-md border border-stone-800 bg-stone-950 px-2 py-0.5 text-[10px] font-medium text-stone-500"
+            className="rounded-md border border-stone-800 bg-stone-950 px-2 py-0.5 text-[10px] font-medium text-stone-500 transition-colors group-hover:border-stone-700"
           >
             {tag}
           </span>
@@ -519,10 +546,10 @@ function SkillBar({ skill, index }) {
   return (
     <div
       ref={ref}
-      className="rounded-lg border border-stone-800 bg-stone-900/50 p-4"
+      className="group rounded-lg border border-stone-800 bg-stone-900/50 p-4 transition-all duration-300 hover:border-accent/20"
     >
       <div className="mb-2 flex items-center justify-between">
-        <span className="text-sm font-medium text-stone-200">{skill.name}</span>
+        <span className="text-sm font-medium text-stone-200 transition-colors group-hover:text-accent">{skill.name}</span>
         <span className="text-xs text-stone-500">{skill.level}%</span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-stone-800">
@@ -530,7 +557,10 @@ function SkillBar({ skill, index }) {
           initial={{ width: 0 }}
           animate={isInView ? { width: `${skill.level}%` } : {}}
           transition={{ duration: 0.8, delay: index * 0.06, ease: [0.25, 0.4, 0.25, 1] }}
-          className="h-full rounded-full bg-accent"
+          className="h-full rounded-full"
+          style={{
+            background: `linear-gradient(90deg, var(--accent-dim), var(--accent), var(--accent))`,
+          }}
         />
       </div>
     </div>
@@ -539,8 +569,11 @@ function SkillBar({ skill, index }) {
 
 function ContactSection() {
   return (
-    <section id="contacto" className="border-t border-stone-800/50 px-5 py-16 md:px-6 md:py-28">
-      <div className="mx-auto max-w-2xl text-center">
+    <section id="contacto" className="relative border-t border-stone-800/50 px-5 py-16 md:px-6 md:py-28">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute -bottom-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-accent/5 blur-[100px]" />
+      </div>
+      <div className="relative mx-auto max-w-2xl text-center">
         <FadeIn delay={0.1}>
           <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-accent">
             Contacto
@@ -550,7 +583,7 @@ function ContactSection() {
           </h2>
           <p className="mb-10 text-sm leading-relaxed text-stone-400">
             Estoy abierto a oportunidades laborales, proyectos freelance y
-            colaboraciones. Si creés que puedo aportar a tu equipo, escribime.
+            colaboraciones. Si crees que puedo aportar, escríbeme.
           </p>
         </FadeIn>
         <FadeIn delay={0.2}>
@@ -595,11 +628,7 @@ function ContactSection() {
               rel="noopener noreferrer"
               className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-stone-700 px-8 text-sm font-medium text-stone-300 transition-all hover:border-stone-600 hover:bg-stone-800 sm:w-auto"
             >
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
               </svg>
               GitHub

@@ -28,7 +28,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="es" className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden`}>
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </head>
