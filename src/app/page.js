@@ -3,90 +3,93 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "motion/react";
 
-/* ————— datos reales — git pull de greikol4321-hub ————— */
-const projects = [
+/* ————— lo que ofrezco — forward, no retrospective ————— */
+const services = [
   {
-    id: "ctpm",
-    kicker: "CTP Matapalo · En uso",
+    title: "Webs para tours y negocios",
+    desc: "Te armo una página que carga rápido en el cel del cliente — que es donde importa — con reservas por WhatsApp, SEO listo y fotos optimizadas. De landing que convierte a web con catálogo. Sin plantillas que se ven todas iguales.",
+    bullets: ["Next.js 16 + Tailwind", "WhatsApp / reservas integradas", "SEO y Core Web Vitals desde el día 1"],
+    icon: "◐",
+  },
+  {
+    title: "Taquilla y entradas con QR + SINPE",
+    desc: "Si vendés entradas para un baile, feria o tour, te dejo el flujo completo: el cliente elige lugar, paga por SINPE con referencia con su nombre, sube comprobante y recibe QR por WhatsApp. En puerta, una entrada = un escaneo. Y ya está.",
+    bullets: ["Mapa de mesas silla por silla si hace falta", "QR de 5 letras (33M combos, sin 0/O/I)", "Validación que no se revende"],
+    icon: "◧",
+  },
+  {
+    title: "Paneles admin que no piden manual",
+    desc: "Te dejo un panel donde el dueño crea tours, ve reservas y responde mensajes sin llamar al dev. Cada rol ve solo lo suyo — vendedor no ve admin — y si no hay datos, te lo dice con una frase y un botón, no con un 'No data found' frío.",
+    bullets: ["Supabase + RLS por sede/rol", "Tablas que no parecen Excel", "Un solo acento verde: si es verde, se toca"],
+    icon: "▤",
+  },
+  {
+    title: "Sistemas livianos para coles y ferias",
+    desc: "Para evaluación de ferias, votaciones o controles internos. Si hace falta que cualquier profe lo abra sin build, lo hago en vanilla JS. Gemelo por colegio con la misma base, distinta key y logo. Mira, eso lo tengo probado con el MEP.",
+    bullets: ["Vanilla o Next según el caso", "Exporta PDF, filtra por estado", "Sin dependencias que pesan"],
+    icon: "▭",
+  },
+  {
+    title: "Optimización y SEO técnico",
+    desc: "Si tu web ya existe pero carga lento o Google no la encuentra, la reviso: imágenes, Core Web Vitals, metadata, estructura. Te digo qué tocar y lo toco. Sin humo.",
+    bullets: ["Lighthouse 90+ como estándar", "Imágenes y fuentes optimizadas", "Metadata y sitemap que sí sirven"],
+    icon: "◎",
+  },
+  {
+    title: "Soporte, hosting y evolutivos",
+    desc: "Te dejo dominio, hosting en Vercel y soporte para cambios chicos. Push a master despliega en ~12s. Me quedo cerca las primeras semanas por si hay que girar una silla que miraba al revés — nos pasó.",
+    bullets: ["Deploy automático", "Storage privado + backups", "Cambios por WhatsApp, sin ticket eterno"],
+    icon: "↻",
+  },
+];
+
+/* prueba social — mencionado pero no protagonista */
+const recentWork = [
+  {
     title: "Entradas CTPM",
-    problem:
-      "El Gran Baile de Gala vendía entradas a mano. Filas, planilla en papel, mesas que nadie ubicaba. 12 mesas, 72 sillas, y doscientas familias preguntando '¿dónde me siento?'",
-    solution:
-      "Mapa real del gimnasio. Cada mesa es un círculo crema con 6 sillas que miran al centro — verde libre, rojo ocupada, naranja la que acabas de tocar. El cliente paga por SINPE con referencia tipo CTPM-GREIKOL-0347-M3, sube la captura y recibe recibo, no la entrada. La verdad es que la revisamos a mano y en 48h le llega el QR por WhatsApp. En puerta, una entrada = un escaneo. Y ya está.",
-    stack: ["Flask 3.1", "Supabase Postgres", "qrcode + Pillow", "Vercel"],
-    links: {
-      code: "https://github.com/greikol4321-hub/entradas-ctpm",
-      demo: "https://entradas-ctpm.vercel.app",
-    },
-    highlight: "QR de 5 letras (32M combinaciones), sin 0/O/I para no confundirse",
-    accent: true,
+    oneLiner: "Mapa 1:1 del gimnasio (12 mesas, 72 sillas) + flujo SINPE → QR 48h.",
+    stack: ["Flask", "Supabase"],
+    links: { code: "https://github.com/greikol4321-hub/entradas-ctpm", demo: "https://entradas-ctpm.vercel.app" },
+    note: "En uso — CTP Matapalo",
   },
   {
-    id: "taquilla",
-    kicker: "Multi-sede · Producción",
     title: "Taquilla",
-    problem:
-      "Cada sede vendía por su lado y el portero no sabía si ese QR ya había entrado. Un QR de Quepos no puede validarse en Matapalo, pero antes sí pasaba.",
-    solution:
-      "Taquilla por lugar. Vendedor genera QR, portero escanea con la cámara — suena chime, marca usada —, admin de sede crea su equipo y ve solo lo suyo. Al fin y al cabo cada lugar ve solo lo suyo, y el admin general ve todo. Sin enredos.",
-    stack: ["Flask", "Supabase + RLS", "Storage privado", "Vercel"],
-    links: {
-      code: "https://github.com/greikol4321-hub/taquilla",
-      demo: "https://taquilla-quepos.vercel.app",
-    },
-    highlight: "private, max-age=8 + sessionStorage · cámara con fallback environment→user",
-    accent: true,
+    oneLiner: "Taquilla multi-sede: vendedor genera, portero valida con cámara, RLS por sede.",
+    stack: ["Flask", "Supabase"],
+    links: { code: "https://github.com/greikol4321-hub/taquilla", demo: "https://taquilla-quepos.vercel.app" },
+    note: "Producción",
   },
   {
-    id: "jungle",
-    kicker: "Turismo · Completado",
     title: "Jungle Wildlife Tours",
-    problem:
-      "Una operadora de la selva con fotos de verdad pero web que no vendía. Reservas por WhatsApp perdidas, sin panel para que el dueño tocara nada sin llamar al dev.",
-    solution:
-      "Panel para una sola persona: el dueño. Crea y edita tours con fotos, modera reseñas y responde contactos sin buscar botones escondidos. Si no hay tours, no te suelta un 'No data found' frío — te dice con una frase y un botón para crear el primero. Eso sí, todo respira, las tablas no parecen Excel.",
-    stack: ["Next.js 16", "Tailwind v4", "Supabase", "TypeScript", "i18n"],
-    links: {
-      code: "https://github.com/greikol4321-hub/jungle-wildlife-tours",
-      demo: "https://jungle-wildlife-tours.vercel.app",
-    },
-    highlight: "Un solo acento esmeralda: si es verde, se puede tocar. Punto.",
-    accent: false,
+    oneLiner: "Web + panel para operadora de selva: CRUD tours, reseñas, i18n.",
+    stack: ["Next.js", "Tailwind"],
+    links: { code: "https://github.com/greikol4321-hub/jungle-wildlife-tours", demo: "https://jungle-wildlife-tours.vercel.app" },
+    note: "Completado",
   },
   {
-    id: "evaluaciones",
-    kicker: "MEP · 2 colegios",
-    title: "Evaluación de Ferias — CTPQ",
-    problem:
-      "Ferias institucionales del MEP evaluadas en papel. Jueces perdiendo hojas, resultados que nadie consolidaba a tiempo.",
-    solution:
-      "Vanilla HTML/CSS/JS sin build, 7 páginas — login, usuarios, proyectos, asignaciones, resultados, observaciones, juez — con Supabase y RLS, exporta PDF con jsPDF. Es gemelo de Matapalo: mismo código, distinta llave Supabase y logo. Mira, si corrijo un bug aquí, lo aplico allá y ya está.",
-    stack: ["HTML/CSS/JS", "Supabase + RLS", "jsPDF", "Vercel"],
-    links: {
-      code: "https://github.com/greikol4321-hub/evaluaciones-CTPQ",
-      demo: "https://evaluaciones-ctpq.vercel.app",
-    },
-    highlight: "Sin framework, a propósito — para que cualquier profe lo abra y funcione",
-    accent: false,
+    title: "Evaluación Ferias CTPQ",
+    oneLiner: "7 páginas vanilla, RLS, PDF con jsPDF — gemelo Matapalo.",
+    stack: ["Vanilla JS", "Supabase"],
+    links: { code: "https://github.com/greikol4321-hub/evaluaciones-CTPQ", demo: "https://evaluaciones-ctpq.vercel.app" },
+    note: "MEP · 2 colegios",
   },
 ];
 
 const stackGroups = [
   {
-    label: "Con lo que shippeo",
+    label: "Con lo que te lo armo",
     items: ["Next.js 16", "React 19", "Tailwind v4", "TypeScript", "JavaScript"],
   },
   {
     label: "Datos y deploy",
-    items: ["Supabase", "PostgreSQL + RLS", "Vercel", "Flask 3.1", "psycopg"],
+    items: ["Supabase + RLS", "PostgreSQL", "Vercel", "Flask 3.1", "psycopg"],
   },
   {
-    label: "Lo que cuido",
-    items: ["Accesibilidad AA", "QR sin reventa", "RLS por sede", "Foco visible 2px", "prefers-reduced-motion"],
+    label: "Lo que cuido siempre",
+    items: ["Accesibilidad AA", "Foco 2px esmeralda", "RLS por rol", "QR sin reventa", "150ms motion"],
   },
 ];
 
-/* ————— helpers ————— */
 function useReducedMotion() {
   const [rm, setRm] = useState(false);
   useEffect(() => {
@@ -116,7 +119,6 @@ function Fade({ children, delay = 0, y = 16, className = "" }) {
   );
 }
 
-/* ————— page ————— */
 export default function Home() {
   return (
     <>
@@ -124,10 +126,11 @@ export default function Home() {
       <main>
         <Hero />
         <ProofStrip />
-        <Work />
+        <Services />
         <Approach />
-        <About />
         <StackSection />
+        <RecentWork />
+        <About />
         <Contact />
       </main>
       <Footer />
@@ -144,9 +147,9 @@ function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   const links = [
+    { label: "Qué hago", href: "#que-hago" },
+    { label: "Habilidades", href: "#habilidades" },
     { label: "Trabajo", href: "#trabajo" },
-    { label: "Cómo trabajo", href: "#como-trabajo" },
-    { label: "Sobre mí", href: "#sobre-mi" },
     { label: "Contacto", href: "#contacto" },
   ];
   return (
@@ -235,13 +238,11 @@ function Header() {
 function Hero() {
   const rm = useReducedMotion();
   return (
-    <section className="relative overflow-hidden px-5 pb-10 pt-[84px] md:px-6 md:pb-16 md:pt-[104px]">
-      {/* topo + glow */}
+    <section className="relative overflow-hidden px-5 pb-10 pt-[84px] md:px-6 md:pb-14 md:pt-[104px]">
       <div className="topo pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="pointer-events-none absolute -top-28 left-1/2 h-[640px] w-[920px] -translate-x-1/2 rounded-full bg-accent opacity-[0.07] blur-[90px]" />
 
       <div className="relative mx-auto grid max-w-[1120px] gap-8 md:grid-cols-[1.15fr_0.85fr] md:items-center md:gap-10">
-        {/* left: thesis */}
         <motion.div
           initial={rm ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
@@ -249,26 +250,25 @@ function Hero() {
         >
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted">
             <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--accent)]" />
-            Disponible para equipo o freelance — Quepos, Costa Rica
+            Disponible para freelance o equipo — Quepos, Costa Rica
           </p>
 
           <h1 className="font-display text-[clamp(2rem,6vw,3.75rem)] font-[800] leading-[0.95] tracking-[-0.03em] text-foreground">
-            Sistemas chicos
-            <span className="block font-[400] italic tracking-[-0.02em] text-accent">que sí se usan.</span>
+            Te hago una web
+            <span className="block font-[400] italic tracking-[-0.02em] text-accent">que la gente sí usa.</span>
           </h1>
 
           <p className="mt-5 max-w-[56ch] text-[15px] leading-[1.65] text-muted md:text-[16px]">
-            Soy Greikol, de Quepos. La verdad es que no hago dashboards con neón ni landing con ocho secciones iguales. Hago lo justo para que
-            200 padres hagan fila sin perderse — con un QR que entra una sola vez y un mapa que sí se entiende. Si necesita manual, está mal hecho.
-            Y ya está.
+            No es “he hecho tal”. Es lo que te puedo armar: webs rápidas para tours y negocios, taquillas con QR + SINPE que no se revenden,
+            paneles donde el admin no tiene que adivinar. La verdad es que si necesita manual, está mal hecha. Corto y sin humo.
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a
-              href="#trabajo"
+              href="#que-hago"
               className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-[#07110d] shadow-[0_8px_24px_var(--accent-soft)] transition-all hover:brightness-[1.05] active:scale-[0.98]"
             >
-              Ver sistemas en uso
+              Ver qué te puedo armar
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M13 5l7 7-7 7" />
               </svg>
@@ -279,69 +279,59 @@ function Hero() {
               rel="noopener noreferrer"
               className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 text-sm font-medium text-foreground hover:bg-surface-hover hover:border-border-strong"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                <path d="M2.25 12a9.75 9.75 0 0013.5 9l3 1-1-3a9.75 9.75 0 00-15.5-7z" />
-                <path d="M9 9c.2 1.1 1.1 2 2.2 2.2l1-.2c.4-.1.7-.4.8-.8l.2-1c.1-.5-.2-1-.7-1.1l-1-.2a1 1 0 00-1.1.7L9 9z" />
-              </svg>
               WhatsApp directo
             </a>
           </div>
 
           <p className="mt-4 text-xs leading-relaxed text-faint">
-            Código abierto. Push a <span className="font-mono text-muted">master</span> despliega en ~12s. Sin humo.
+            De Quepos para Costa Rica. Respondo yo, sin bot. Push a <span className="font-mono text-muted">master</span> despliega en ~12s.
           </p>
         </motion.div>
 
-        {/* right: bento proof — 2 tickets reales */}
         <motion.div
           initial={rm ? false : { opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: rm ? 0 : 0.12, ease: [0.25, 0.4, 0.25, 1] }}
           className="grid gap-3"
         >
-          {/* ticket CTPM */}
           <div className="ticket-perf relative overflow-hidden rounded-[16px] border border-border bg-surface p-4 pl-6 shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">CTP Matapalo · Baile de Gala</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Ejemplo — no es el foco</p>
                 <p className="font-display mt-1 text-lg font-semibold leading-none">Mesa M3 · 6 sillas</p>
-                <p className="mt-1 text-xs text-muted">Ref: CTPM-GREIKOL-0347-M3 · ₡10.000</p>
+                <p className="mt-1 text-xs text-muted">QR 5 letras · 1 escaneo · SINPE con referencia</p>
               </div>
               <div className="grid h-[84px] w-[84px] place-items-center rounded-[12px] border border-border bg-background p-2">
                 <div className="grid h-full w-full place-items-center rounded-md bg-[#EDE9E3] font-mono text-[10px] font-bold tracking-widest text-[#0b1410]">
                   QJPFG
                 </div>
-                <span className="mt-1 font-mono text-[9px] tracking-widest text-muted">QR 5 letras</span>
+                <span className="mt-1 font-mono text-[9px] tracking-widest text-muted">QR</span>
               </div>
             </div>
             <div className="mt-4 flex items-center gap-2 border-t border-dashed border-border pt-3 text-xs text-muted">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-background px-2.5 py-1 text-xs font-medium text-foreground">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Válida
               </span>
-              <span className="font-mono text-[11px]">360×520 vertical</span>
-              <span className="ml-auto hidden text-faint sm:inline">No se revende · 1 escaneo</span>
+              <span className="font-mono text-[11px]">Flask + Supabase + Vercel</span>
+              <span className="ml-auto hidden text-faint sm:inline">Mencionado, no protagonista</span>
             </div>
           </div>
 
-          {/* mini stats bento */}
           <div className="grid grid-cols-3 gap-3">
             <div className="rounded-[14px] border border-border bg-surface p-4">
-              <p className="font-display text-2xl font-bold leading-none text-foreground">3</p>
-              <p className="mt-1 text-xs leading-tight text-muted">sistemas en producción</p>
+              <p className="font-display text-lg font-bold leading-none text-foreground">Webs</p>
+              <p className="mt-1 text-xs leading-tight text-muted">que cargan en cel</p>
             </div>
             <div className="rounded-[14px] border border-border bg-surface p-4">
-              <p className="font-display text-2xl font-bold leading-none text-foreground">12</p>
-              <p className="mt-1 text-xs leading-tight text-muted">mesas mapeadas 1:1 del gimnasio</p>
+              <p className="font-display text-lg font-bold leading-none text-foreground">QR + SINPE</p>
+              <p className="mt-1 text-xs leading-tight text-muted">sin reventa</p>
             </div>
             <div className="rounded-[14px] border border-accent/25 bg-accent/10 p-4">
-              <p className="font-display text-2xl font-bold leading-none text-accent">2</p>
-              <p className="mt-1 text-xs leading-tight text-foreground">colegios usando el mismo core</p>
+              <p className="font-display text-lg font-bold leading-none text-accent">Panel</p>
+              <p className="mt-1 text-xs leading-tight text-foreground">sin manual</p>
             </div>
           </div>
-
-          <p className="px-1 text-xs leading-relaxed text-faint">
-            Mira, son capturas no renders. Abajo están los repos con el código tal cual quedó para el cole.
-          </p>
+          <p className="px-1 text-xs leading-relaxed text-faint">Mira, esto es solo una muestra de cómo queda. Abajo está lo que te ofrezco.</p>
         </motion.div>
       </div>
     </section>
@@ -353,135 +343,84 @@ function ProofStrip() {
     <section className="border-y border-border bg-surface/60 px-5 py-3 backdrop-blur md:px-6">
       <div className="mx-auto flex max-w-[1120px] flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted">
         <span className="inline-flex items-center gap-2">
-          <span className="h-1 w-1 rounded-full bg-accent" /> Push a master → Vercel 12s
+          <span className="h-1 w-1 rounded-full bg-accent" /> Next.js · Supabase · Flask · Vercel
         </span>
         <span className="hidden h-3 w-px bg-border md:block" />
-        <span>Supabase RLS por sede</span>
+        <span>RLS por rol/sede</span>
         <span className="hidden h-3 w-px bg-border md:block" />
-        <span>12 mesas · 6 sillas cada una</span>
+        <span>QR 1 escaneo</span>
         <span className="hidden h-3 w-px bg-border md:block" />
-        <span>SINPE Móvil con referencia con nombre</span>
+        <span>SINPE con referencia con nombre</span>
         <span className="hidden h-3 w-px bg-border md:block" />
-        <span>QR de 5 letras, 33M combinaciones</span>
+        <span>Deploy 12s</span>
       </div>
     </section>
   );
 }
 
-function Work() {
+function Services() {
   return (
-    <section id="trabajo" className="px-5 py-14 md:px-6 md:py-20">
+    <section id="que-hago" className="px-5 py-14 md:px-6 md:py-20">
       <div className="mx-auto max-w-[1120px]">
         <Fade>
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Trabajo — no demos, producción</p>
-          <h2 className="font-display mt-2 max-w-[18ch] text-[clamp(1.6rem,4vw,2.5rem)] font-bold leading-[1.05] tracking-[-0.02em]">
-            Si no sirve con 200 padres en fila, no sirve.
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Qué te puedo armar — no es “de todo un poco”</p>
+          <h2 className="font-display mt-2 max-w-[20ch] text-[clamp(1.6rem,4vw,2.5rem)] font-bold leading-[1.05] tracking-[-0.02em]">
+            Seis cosas que sí hago bien.
           </h2>
           <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted">
-            Cada proyecto tiene problema real, solución a medida y links para ver el código sin maquillaje. La verdad es que prefiero que lo
-            abras y digas “ahora sí lo encuentro” a que parezca bonito y no se use.
+            La verdad es que no te voy a decir “he hecho tal proyecto” como si fuera medalla. Te digo qué te resuelvo, con qué y en cuánto
+            tiempo, y ya está. Si querés ver código, abajo hay pruebas, pero no es el centro.
           </p>
         </Fade>
 
-        <div className="mt-8 grid gap-4 md:mt-10 md:grid-cols-6">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} featured={p.accent} index={i} />
+        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((s, i) => (
+            <ServiceCard key={s.title} service={s} index={i} />
           ))}
         </div>
 
-        <Fade delay={0.2} className="mt-8 flex flex-wrap items-center gap-3">
-          <a
-            href="https://github.com/greikol4321-hub"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-surface px-5 text-sm font-medium text-foreground hover:bg-surface-hover"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-            Todos los repos
-          </a>
-          <span className="text-xs text-faint">13 repos públicos · mira el commit history, ahí está cómo trabajo de verdad</span>
+        <Fade delay={0.2} className="mt-6 rounded-[14px] border border-dashed border-border bg-surface/60 p-4 md:p-5">
+          <p className="text-sm leading-relaxed text-muted">
+            <span className="font-medium text-foreground">¿No está lo tuyo?</span> Al fin y al cabo, si es una web que tiene que vender,
+            reservar o controlar entradas, aunque claro, cada negocio tiene su vuelta, lo vemos. Si no soy el indicado, te digo y te paso a alguien.
+            Sin vueltas.
+          </p>
         </Fade>
       </div>
     </section>
   );
 }
 
-function ProjectCard({ project, featured, index }) {
+function ServiceCard({ service, index }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.18 });
+  const inView = useInView(ref, { once: true, amount: 0.2 });
   const rm = useReducedMotion();
-  const col = featured ? "md:col-span-3" : "md:col-span-3";
-  // make first two larger visually via min-height, but keep grid simple (2+2)
   return (
     <motion.div
       ref={ref}
-      initial={rm ? false : { opacity: 0, y: 16 }}
+      initial={rm ? false : { opacity: 0, y: 14 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay: rm ? 0 : index * 0.06, ease: [0.25, 0.4, 0.25, 1] }}
-      className={`group relative flex flex-col overflow-hidden rounded-[16px] border bg-surface ${featured ? "border-accent/20 shadow-[0_10px_40px_rgba(78,203,113,0.08)]" : "border-border"} ${col}`}
+      transition={{ duration: 0.5, delay: rm ? 0 : index * 0.05, ease: [0.25, 0.4, 0.25, 1] }}
+      className="group flex flex-col rounded-[16px] border border-border bg-surface p-5 transition-colors hover:border-accent/20 hover:bg-surface-hover md:p-6"
     >
-      {/* perforación sutil izquierda solo en featured */}
-      {featured && <span className="ticket-perf pointer-events-none absolute inset-y-0 left-0 w-4" />}
-
-      <div className={`flex flex-col gap-4 p-5 md:p-6 ${featured ? "pl-7 md:pl-8" : ""}`}>
-        <div className="flex items-start justify-between gap-3">
-          <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide ${featured ? "border-accent/20 bg-accent/10 text-accent" : "border-border bg-background text-muted"}`}>
-            <span className={`h-1.5 w-1.5 rounded-full ${featured ? "bg-accent" : "bg-muted"}`} />
-            {project.kicker}
-          </span>
-          <span className="hidden font-mono text-[11px] text-faint sm:inline">{project.highlight}</span>
-        </div>
-
-        <div>
-          <h3 className="font-display text-xl font-semibold tracking-tight text-foreground group-hover:text-accent transition-colors">
-            {project.title}
-          </h3>
-          <div className="mt-3 space-y-2.5 text-sm leading-relaxed">
-            <p className="text-muted">
-              <span className="font-medium text-foreground/90">Problema:</span> {project.problem}
-            </p>
-            <p className="text-muted">
-              <span className="font-medium text-foreground/90">Lo que hice:</span> {project.solution}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-1.5">
-          {project.stack.map((t) => (
-            <span key={t} className="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-muted">
-              {t}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-auto flex items-center gap-2 border-t border-border pt-4">
-          <a
-            href={project.links.code}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-8 items-center gap-1.5 rounded-full border border-border bg-background px-3 text-xs font-medium text-muted hover:text-foreground hover:border-border-strong"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-            Código
-          </a>
-          <a
-            href={project.links.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-8 items-center gap-1.5 rounded-full bg-accent px-3.5 text-xs font-medium text-[#07110d] hover:brightness-[1.06]"
-          >
-            Ver sitio
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7 17L17 7M17 7H7m10 0v10" />
-            </svg>
-          </a>
-          <span className="ml-auto hidden text-xs text-faint md:inline">→ sin humo, código tal cual</span>
-        </div>
+      <div className="flex items-start justify-between gap-3">
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-border bg-background font-mono text-sm text-accent">
+          {service.icon}
+        </span>
+        <span className="rounded-full bg-background px-2.5 py-1 font-mono text-[11px] text-faint">Te entrego</span>
       </div>
+      <h3 className="font-display mt-4 text-base font-semibold leading-tight text-foreground group-hover:text-accent transition-colors">
+        {service.title}
+      </h3>
+      <p className="mt-2 text-sm leading-relaxed text-muted">{service.desc}</p>
+      <ul className="mt-4 space-y-1.5">
+        {service.bullets.map((b) => (
+          <li key={b} className="flex gap-2 text-xs leading-relaxed text-muted">
+            <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-accent" />
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
     </motion.div>
   );
 }
@@ -490,25 +429,25 @@ function Approach() {
   const steps = [
     {
       n: "01",
-      title: "Escucho y dibujo el gimnasio",
-      text: "Antes de codear, pregunto cómo cobran hoy. Si me dicen 'con cuaderno', hago el mapa del gimnasio tal cual, no un grid genérico. Eso sí, si no se entiende a la primera, lo reescribo.",
+      title: "Me contás cómo cobrás hoy",
+      text: "Sin form largo. Me decís si cobrás con cuaderno, SINPE o link, y dibujo el flujo tal cual. Si no se entiende a la primera, lo reescribo, no le añado otro párrafo.",
     },
     {
       n: "02",
-      title: "Lo justo, sin manual",
-      text: "Un rol ve solo lo suyo — vendedor no ve admin, portero no ve mesas de otra sede. Si necesita tutorial, está mal hecho. La verdad es que me importa que la señora de admisión lo use sin llamarme.",
+      title: "Te muestro clickeable antes de codear",
+      text: "Wire en Figma o demo en staging. Vos tocás, yo ajusto. Eso sí, te digo qué no hacer — 50 features por si acaso no.",
     },
     {
       n: "03",
       title: "Shippeo y me quedo cerca",
-      text: "Push a master y Vercel despliega. Me quedo viendo los primeros QR en puerta, corrijo sillas que miraban al revés — nos pasó — y lo dejo respirando.",
+      text: "Deploy a Vercel y te paso acceso. Las primeras dos semanas estoy por WhatsApp por si hay que girar una silla o cambiar un texto.",
     },
   ];
   return (
-    <section id="como-trabajo" className="border-y border-border bg-surface/40 px-5 py-14 md:px-6 md:py-20">
+    <section className="border-y border-border bg-surface/40 px-5 py-14 md:px-6 md:py-20">
       <div className="mx-auto max-w-[1120px]">
         <Fade>
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Cómo trabajo</p>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Cómo trabajo con vos</p>
           <h2 className="font-display mt-2 max-w-[16ch] text-[clamp(1.5rem,4vw,2.2rem)] font-bold leading-[1.05] tracking-[-0.02em]">
             Tres pasos y ya está.
           </h2>
@@ -523,59 +462,164 @@ function Approach() {
           ))}
         </div>
         <p className="mt-6 max-w-[70ch] text-sm leading-relaxed text-faint">
-          No hago apps con 50 features por si acaso. Al fin y al cabo, si no aguanta una tarde con 12 mesas moviéndose y el SINPE vibrando, no sirve.
-          Mira, prefiero entregar 3 flujos que sí se usan que 20 que se ven bien en demo.
+          Al fin y al cabo, prefiero entregarte 3 flujos que sí usa tu equipo a 20 pantallas que se ven bien en demo. Vamos.
         </p>
       </div>
     </section>
   );
 }
 
+function StackSection() {
+  return (
+    <section id="habilidades" className="px-5 py-14 md:px-6 md:py-16">
+      <div className="mx-auto max-w-[1120px]">
+        <Fade>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Habilidades — con qué te lo armo</p>
+          <h2 className="font-display mt-2 text-[clamp(1.4rem,4vw,2rem)] font-bold tracking-[-0.02em]">Stack sin porcentajes inventados.</h2>
+          <p className="mt-2 max-w-[60ch] text-sm leading-relaxed text-muted">
+            No te pongo barras al 90% — eso no dice nada. Te digo con qué shippeo cada semana y qué cuido siempre. Si algo no lo domino al 100%,
+            te aviso.
+          </p>
+        </Fade>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {stackGroups.map((g, i) => (
+            <Fade key={g.label} delay={i * 0.07} className="rounded-[14px] border border-border bg-surface p-5">
+              <p className="font-mono text-xs uppercase tracking-wide text-faint">{g.label}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {g.items.map((it) => (
+                  <span key={it} className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground">
+                    {it}
+                  </span>
+                ))}
+              </div>
+            </Fade>
+          ))}
+        </div>
+        <p className="mt-6 text-xs text-faint">
+          Tipografía Fraunces para títulos, Geist para UI, Mono para tickets. Radius 12px siempre. Motion 150ms solo para feedback.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function RecentWork() {
+  return (
+    <section id="trabajo" className="border-y border-border bg-surface/40 px-5 py-14 md:px-6 md:py-16">
+      <div className="mx-auto max-w-[1120px]">
+        <Fade>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Trabajo reciente — mencionado, no protagonista</p>
+          <h2 className="font-display mt-2 text-[clamp(1.4rem,3.5vw,1.9rem)] font-bold tracking-[-0.02em]">Por si querés ver cómo queda.</h2>
+          <p className="mt-2 max-w-[60ch] text-sm leading-relaxed text-muted">
+            La verdad es que no es el centro de la página, pero te dejo 4 cosas que ya están en uso — por si querés abrir el código y ver cómo trabajo,
+            más o menos tal cual quedó para el cole.
+          </p>
+        </Fade>
+
+        <div className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+          {recentWork.map((w, i) => (
+            <RecentCard key={w.title} work={w} index={i} />
+          ))}
+        </div>
+
+        <Fade delay={0.15} className="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://github.com/greikol4321-hub"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 items-center gap-2 rounded-full border border-border bg-background px-4 text-xs font-medium text-foreground hover:bg-surface"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+            Ver todos los repos
+          </a>
+          <span className="text-xs text-faint">13 repos · código tal cual, sin maquillaje</span>
+        </Fade>
+      </div>
+    </section>
+  );
+}
+
+function RecentCard({ work, index }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const rm = useReducedMotion();
+  return (
+    <motion.div
+      ref={ref}
+      initial={rm ? false : { opacity: 0, y: 12 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.45, delay: rm ? 0 : index * 0.05 }}
+      className="flex flex-col rounded-[14px] border border-border bg-background p-4 transition-colors hover:border-accent/20"
+    >
+      <span className="font-mono text-[11px] uppercase tracking-wide text-faint">{work.note}</span>
+      <h3 className="font-display mt-1 text-sm font-semibold text-foreground">{work.title}</h3>
+      <p className="mt-1.5 text-xs leading-relaxed text-muted">{work.oneLiner}</p>
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        {work.stack.map((s) => (
+          <span key={s} className="rounded-full bg-surface px-2 py-1 font-mono text-[11px] text-muted">
+            {s}
+          </span>
+        ))}
+      </div>
+      <div className="mt-3 flex gap-2 border-t border-border pt-3">
+        <a
+          href={work.links.code}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs font-medium text-muted hover:text-foreground"
+        >
+          Código →
+        </a>
+        <a
+          href={work.links.demo}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs font-medium text-accent hover:brightness-110"
+        >
+          Demo →
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+
 function About() {
   return (
-    <section id="sobre-mi" className="px-5 py-14 md:px-6 md:py-20">
-      <div className="mx-auto grid max-w-[1120px] gap-8 md:grid-cols-[1.05fr_0.85fr] md:gap-10">
+    <section className="px-5 py-14 md:px-6 md:py-16">
+      <div className="mx-auto grid max-w-[1120px] gap-8 md:grid-cols-[0.95fr_1.05fr] md:gap-10">
         <Fade>
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Sobre mí</p>
-          <h2 className="font-display mt-2 text-[clamp(1.5rem,4vw,2.3rem)] font-bold leading-[1.05] tracking-[-0.02em]">
-            De Quepos. Autodidacta. <span className="font-normal italic text-muted">Me gusta cuando el admin me dice “ahora sí”.</span>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Quién soy</p>
+          <h2 className="font-display mt-2 text-[clamp(1.4rem,4vw,2rem)] font-bold leading-[1.05] tracking-[-0.02em]">
+            De Quepos. Autodidacta. <span className="font-normal italic text-muted">Me importa que digas “ahora sí”.</span>
           </h2>
-          <div className="mt-5 space-y-4 text-sm leading-[1.7] text-muted">
+          <div className="mt-4 space-y-3 text-sm leading-[1.7] text-muted">
             <p>
-              Soy Greikol. Hago sistemas chicos que se usan de verdad — no templates con lorem ipsum. Empecé ayudando a coles técnicos de
-              Quepos y Matapalo, y sin ir más lejos terminé mapeando un gimnasio entero silla por silla porque 12 botones grises no le servían
-              a nadie.
+              Soy Greikol. La verdad es que hago sistemas chicos que quitan trabajo, no que añaden pasos. Empecé con coles técnicos de Quepos
+              y Matapalo y sin ir más lejos terminé dibujando un gimnasio silla por silla porque 12 botones grises no le servían a nadie.
             </p>
             <p>
-              La verdad es que me importa más que la señora de la entrada escanee sin trabarse a que el dashboard tenga neón. He desarrollado
-              paneles para tours en la selva, taquillas multi-sede y evaluaciones de ferias del MEP — cada uno con su base Supabase y su deploy
-              en Vercel, más o menos como los dejé para el cole. Si querés ver cómo trabajo, mirá el código, está todo ahí.
-            </p>
-            <p className="text-foreground/90">
-              No hago apps que piden 10 permisos para mandar un aviso. Si necesita manual, está mal hecho — y eso sí lo repito bastante.
+              Si te sirve, te armo lo tuyo con el mismo cuidado: rápido en el cel, sin manual, y con el código abierto para que lo veas. Mira,
+              prefiero que abras el repo y digas “se entiende” a que parezca bonito y no se use.
             </p>
           </div>
-
-          <div className="mt-6 flex flex-wrap gap-2 text-xs">
-            <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-muted">Quepos, Costa Rica · GMT-6</span>
-            <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-muted">Español · Inglés técnico</span>
-            <span className="rounded-full border border-accent/20 bg-accent/10 px-3 py-1.5 font-medium text-accent">
-              Buscando equipo · freelance también
-            </span>
+          <div className="mt-5 flex flex-wrap gap-2 text-xs">
+            <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-muted">Quepos · GMT-6</span>
+            <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-muted">ES · EN técnico</span>
           </div>
         </Fade>
 
-        <Fade delay={0.1} className="rounded-[16px] border border-border bg-surface p-5 md:p-6">
-          <h3 className="font-display text-base font-semibold">Lo que busco</h3>
-          <p className="mt-1 text-sm leading-relaxed text-muted">
-            Crecer en un equipo real donde pueda tocar producción, no solo Figma. Eso sí, me va lo de hacer que las cosas funcionen sin vueltas.
-          </p>
+        <Fade delay={0.08} className="rounded-[16px] border border-border bg-surface p-5 md:p-6">
+          <h3 className="font-display text-base font-semibold">Qué gano si trabajamos juntos</h3>
+          <p className="mt-1 text-sm leading-relaxed text-muted">No es “he hecho”, es lo que te llevás vos.</p>
           <ul className="mt-5 space-y-3">
             {[
-              "Proyectos donde el código llega a gente de verdad — no demos internas",
-              "Gente que valore código legible y accesible más que animaciones que marean",
-              "Stack moderno pero sin humo: Next.js, Supabase, Flask si hace falta",
-              "Seguir construyendo software que quita trabajo, no que añade pasos",
+              "Una web o sistema que tu equipo usa sin llamarme cada vez",
+              "Código legible y deploy en Vercel que podés tocar sin miedo",
+              "Accesibilidad y performance cuidadas, no como extra al final",
+              "Comunicación por WhatsApp, demo clickeable antes de codear",
             ].map((t) => (
               <li key={t} className="flex gap-3 text-sm leading-relaxed text-muted">
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
@@ -584,9 +628,9 @@ function About() {
             ))}
           </ul>
           <div className="mt-6 rounded-[12px] border border-dashed border-border bg-background p-4">
-            <p className="font-mono text-xs uppercase tracking-wide text-faint">Cómo me ves trabajando</p>
+            <p className="font-mono text-xs uppercase tracking-wide text-faint">Lo que dice alguien que lo usa</p>
             <p className="mt-1 text-sm italic leading-relaxed text-foreground/80">
-              “Antes no sabía cuántas reservas tenía hasta abrir Excel. Ahora lo veo y ya está.” — dueño, Jungle Wildlife Tours
+              “Antes no sabía cuántas reservas tenía hasta abrir Excel. Ahora lo veo y ya está.” — operadora, Jungle
             </p>
           </div>
         </Fade>
@@ -595,59 +639,19 @@ function About() {
   );
 }
 
-function StackSection() {
-  return (
-    <section id="stack" className="border-y border-border bg-surface/40 px-5 py-14 md:px-6 md:py-16">
-      <div className="mx-auto max-w-[1120px]">
-        <Fade>
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Stack — sin porcentajes inventados</p>
-          <h2 className="font-display mt-2 text-[clamp(1.4rem,4vw,2rem)] font-bold tracking-[-0.02em]">Con esto shippeo hoy.</h2>
-          <p className="mt-2 max-w-[60ch] text-sm leading-relaxed text-muted">
-            No pongo barras al 90% — mira, eso no dice nada. Agrupo por lo que toco cada semana y lo que cuido siempre. Si algo no lo domino
-            al 100%, lo digo y ya está.
-          </p>
-        </Fade>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {stackGroups.map((g, i) => (
-            <Fade key={g.label} delay={i * 0.07} className="rounded-[14px] border border-border bg-background p-5">
-              <p className="font-mono text-xs uppercase tracking-wide text-faint">{g.label}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {g.items.map((it) => (
-                  <span
-                    key={it}
-                    className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-foreground"
-                  >
-                    {it}
-                  </span>
-                ))}
-              </div>
-            </Fade>
-          ))}
-        </div>
-
-        <p className="mt-6 text-xs text-faint">
-          Tipografía: Fraunces para títulos, Geist para UI, JetBrains Mono para lo técnico. Radius siempre 12px, nada de mezclar píldoras y cuadrados.
-          Movimiento solo de 150ms para feedback.
-        </p>
-      </div>
-    </section>
-  );
-}
-
 function Contact() {
   return (
-    <section id="contacto" className="relative px-5 py-14 md:px-6 md:py-20">
+    <section id="contacto" className="relative border-t border-border px-5 py-14 md:px-6 md:py-20">
       <div className="pointer-events-none absolute inset-0 topo opacity-60" aria-hidden="true" />
       <div className="relative mx-auto max-w-[840px] text-center">
         <Fade>
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Contacto</p>
           <h2 className="font-display mx-auto mt-2 max-w-[16ch] text-[clamp(1.6rem,4.5vw,2.6rem)] font-bold leading-[1.05] tracking-[-0.02em]">
-            ¿Tenés un cole, un tour o una taquilla que ordenar?
+            ¿Armamos lo tuyo?
           </h2>
           <p className="mx-auto mt-3 max-w-[52ch] text-sm leading-relaxed text-muted">
-            Estoy abierto a equipo o freelance. Si creés que puedo aportar, escribime — respondo yo, sin bot. Al fin y al cabo, si no te contesto
-            en el día es que estoy en el gimnasio viendo sillas, pero vuelvo.
+            Contame en 2 líneas qué vendés o qué querés ordenar — te digo si te lo puedo armar, con qué y en cuánto. Al fin y al cabo, si no soy el
+            indicado, te lo digo de una.
           </p>
         </Fade>
 
@@ -686,8 +690,7 @@ function Contact() {
         </Fade>
 
         <p className="mx-auto mt-4 max-w-[52ch] text-xs leading-relaxed text-faint">
-          Respondo más rápido por WhatsApp o mail que por LinkedIn — la verdad, casi no lo abro. Si me escribís con “vi tu mapa de 12 mesas”,
-          ya sé por dónde vamos.
+          Respondo más rápido por WhatsApp o mail que por LinkedIn — casi no lo abro. Si me escribís “vi lo de QR + SINPE”, ya sé por dónde vamos.
         </p>
       </div>
     </section>
@@ -698,11 +701,16 @@ function Footer() {
   return (
     <footer className="border-t border-border px-5 py-8 md:px-6">
       <div className="mx-auto flex max-w-[1120px] flex-col items-center justify-between gap-3 text-xs text-faint md:flex-row">
-        <p>© {new Date().getFullYear()} Greikol Q.A — Quepos, Costa Rica · Hecho sin plantilla, con Next.js 16 y Tailwind v4</p>
+        <p>© {new Date().getFullYear()} Greikol Q.A — Quepos, Costa Rica · Next.js 16 + Tailwind v4</p>
         <p className="inline-flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Tip: mirá el código, no el mockup
-          <a href="https://github.com/greikol4321-hub/portafolio" target="_blank" rel="noopener noreferrer" className="underline decoration-border underline-offset-4 hover:text-muted">
-            repo de este portafolio
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Mirá el código, no el mockup
+          <a
+            href="https://github.com/greikol4321-hub/portafolio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-border underline-offset-4 hover:text-muted"
+          >
+            repo
           </a>
         </p>
       </div>
