@@ -29,8 +29,18 @@ npm run dev  # http://localhost:3000
 
 No necesita base de datos, es solo el escaparate. Y ya está.
 
+### Stack real
+
+**Portafolio**: Next.js 16 + React 19 + Tailwind 4 (lo que ves ahora)
+
+**Proyectos en producción**:
+- Backend: Flask 3.1 + Supabase + PostgreSQL
+- Frontend: Next.js 16 + React 19 + Tailwind v4 (o Vanilla JS si no necesita build)
+- Deploy: Vercel
+- Auth y datos: Supabase con RLS por rol/sede
+
 ### Notas
 
-- Hecho con Next 16, React 19 y Tailwind 4. Nada más.
 - Si algo no se entiende a la primera, lo reescribo, no le añado otro párrafo.
+- 5 repos públicos — código que usan de verdad, no template.
 

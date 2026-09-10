@@ -8,7 +8,7 @@ const services = [
   {
     title: "Webs para tours y negocios",
     desc: "Te armo una página que carga rápido en el cel del cliente — que es donde importa — con reservas por WhatsApp, SEO listo y fotos optimizadas. De landing que convierte a web con catálogo. Sin plantillas que se ven todas iguales.",
-    bullets: ["Next.js 16 + Tailwind", "WhatsApp / reservas integradas", "SEO y Core Web Vitals desde el día 1"],
+    bullets: ["Frontend: Next.js + Tailwind", "Backend: Flask si hace falta", "SEO y Core Web Vitals desde el día 1"],
     icon: "◐",
   },
   {
@@ -61,8 +61,8 @@ const recentWork = [
   },
   {
     title: "Jungle Wildlife Tours",
-    oneLiner: "Web + panel para operadora de selva: CRUD tours, reseñas, i18n.",
-    stack: ["Next.js", "Tailwind"],
+    oneLiner: "Web + panel: CRUD tours, reseñas, i18n. Backend → Frontend.",
+    stack: ["Next.js", "React 19", "Supabase", "Tailwind"],
     links: { code: "https://github.com/greikol4321-hub/jungle-wildlife-tours", demo: "https://jungle-wildlife-tours.vercel.app" },
     note: "Completado",
   },
@@ -77,16 +77,16 @@ const recentWork = [
 
 const stackGroups = [
   {
-    label: "Con lo que te lo armo",
-    items: ["Next.js 16", "React 19", "Tailwind v4", "TypeScript", "JavaScript"],
+    label: "Frontend",
+    items: ["Next.js 16", "React 19", "Tailwind v4", "TypeScript", "Vanilla JS"],
   },
   {
-    label: "Datos y deploy",
-    items: ["Supabase + RLS", "PostgreSQL", "Vercel", "Flask 3.1", "psycopg"],
+    label: "Backend",
+    items: ["Flask 3.1", "Supabase + RLS", "PostgreSQL", "psycopg"],
   },
   {
-    label: "Lo que cuido siempre",
-    items: ["Accesibilidad AA", "Foco 2px esmeralda", "RLS por rol", "QR sin reventa", "150ms motion"],
+    label: "Deploy y datos",
+    items: ["Vercel", "Supabase Auth", "PDF + QR generation", "Accesibilidad AA"],
   },
 ];
 
