@@ -20,7 +20,7 @@ const services = [
   {
     title: "Paneles admin que no piden manual",
     desc: "Te dejo un panel donde el dueño crea tours, ve reservas y responde mensajes sin llamar al dev. Cada rol ve solo lo suyo — vendedor no ve admin — y si no hay datos, te lo dice con una frase y un botón, no con un 'No data found' frío.",
-    bullets: ["Supabase + RLS por sede/rol", "Tablas que no parecen Excel", "Un solo acento verde: si es verde, se toca"],
+    bullets: ["Supabase + RLS por sede/rol", "Tablas que no parecen Excel", "Un solo acento dorado: si es dorado, se toca"],
     icon: "▤",
   },
   {
@@ -50,7 +50,7 @@ const recentWork = [
     oneLiner: "Mapa 1:1 del gimnasio (12 mesas, 72 sillas) + flujo SINPE → QR 48h.",
     stack: ["Flask", "Supabase"],
     links: { code: "https://github.com/greikol4321-hub/entradas-ctpm", demo: "https://entradas-ctpm.vercel.app" },
-    note: "En uso — CTP Matapalo",
+    note: "En desarrollo — CTP Matapalo",
   },
   {
     title: "Taquilla",
@@ -78,15 +78,15 @@ const recentWork = [
 const stackGroups = [
   {
     label: "Frontend",
-    items: ["Next.js 16", "React 19", "Tailwind v4", "TypeScript", "Vanilla JS"],
+    items: ["Next.js 16", "React 19", "Tailwind v4", "TypeScript", "Vanilla JS", "HTML", "CSS"],
   },
   {
-    label: "Backend",
-    items: ["Flask 3.1", "Supabase + RLS", "PostgreSQL", "psycopg"],
+    label: "Backend y datos",
+    items: ["Flask 3.1", "Supabase + RLS", "PostgreSQL", "psycopg", "SQL (XAMPP)", "Python", "Java", "C#"],
   },
   {
-    label: "Deploy y datos",
-    items: ["Vercel", "Supabase Auth", "PDF + QR generation", "Accesibilidad AA"],
+    label: "Deploy y persona",
+    items: ["Vercel", "Git / GitHub", "PDF + QR generation", "Accesibilidad AA", "Redes e IoT", "Excel / Word / PowerPoint", "Liderazgo"],
   },
 ];
 
@@ -165,7 +165,7 @@ function Header() {
               <path d="M5 7l5 5-5 5M12 19h7" />
             </svg>
           </span>
-          Greikol Q.A
+          Greikol Quesada
           <span className="hidden text-xs font-normal text-muted md:inline">· Quepos, CR</span>
         </a>
 
@@ -181,7 +181,7 @@ function Header() {
           ))}
           <a
             href="#contacto"
-            className="ml-2 inline-flex h-8 items-center rounded-full bg-accent px-4 text-sm font-medium text-[#07110d] transition-colors hover:bg-[#3dd68c]"
+            className="ml-2 inline-flex h-8 items-center rounded-full bg-accent px-4 text-sm font-medium text-background transition-colors hover:brightness-110"
           >
             Hablemos
           </a>
@@ -222,7 +222,7 @@ function Header() {
                 <a
                   href="mailto:greikolamador@gmail.com"
                   onClick={() => setOpen(false)}
-                  className="mt-2 inline-flex h-10 items-center justify-center rounded-full bg-accent px-5 text-sm font-medium text-[#07110d]"
+                  className="mt-2 inline-flex h-10 items-center justify-center rounded-full bg-accent px-5 text-sm font-medium text-background"
                 >
                   greikolamador@gmail.com
                 </a>
@@ -250,7 +250,7 @@ function Hero() {
         >
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted">
             <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--accent)]" />
-            Disponible para freelance o equipo — Quepos, Costa Rica
+            Estudiante de Desarrollo Web — CTP Quepos · Disponible para freelance
           </p>
 
           <h1 className="font-display text-[clamp(2rem,6vw,3.75rem)] font-[800] leading-[0.95] tracking-[-0.03em] text-foreground">
@@ -266,7 +266,7 @@ function Hero() {
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a
               href="#que-hago"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-[#07110d] shadow-[0_8px_24px_var(--accent-soft)] transition-all hover:brightness-[1.05] active:scale-[0.98]"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_8px_24px_var(--accent-soft)] transition-all hover:brightness-[1.05] active:scale-[0.98]"
             >
               Ver qué te puedo armar
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -274,7 +274,7 @@ function Hero() {
               </svg>
             </a>
             <a
-              href="https://wa.me/50661161249"
+              href="https://wa.me/50661272074"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 text-sm font-medium text-foreground hover:bg-surface-hover hover:border-border-strong"
@@ -301,16 +301,16 @@ function Hero() {
                 <p className="font-display mt-1 text-lg font-semibold leading-none">Mesa M3 · 6 sillas</p>
                 <p className="mt-1 text-xs text-muted">QR 5 letras · 1 escaneo · SINPE con referencia</p>
               </div>
-              <div className="grid h-[84px] w-[84px] place-items-center rounded-[12px] border border-border bg-background p-2">
-                <div className="grid h-full w-full place-items-center rounded-md bg-[#EDE9E3] font-mono text-[10px] font-bold tracking-widest text-[#0b1410]">
+              <div className="grid h-[84px] w-[84px] place-items-center rounded-xl border border-border bg-background p-2">
+                <div className="grid h-full w-full place-items-center rounded-md bg-[#EDE9E3] font-mono text-[10px] font-bold tracking-widest text-background">
                   QJPFG
                 </div>
                 <span className="mt-1 font-mono text-[9px] tracking-widest text-muted">QR</span>
               </div>
             </div>
             <div className="mt-4 flex items-center gap-2 border-t border-dashed border-border pt-3 text-xs text-muted">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-background px-2.5 py-1 text-xs font-medium text-foreground">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Válida
+<span className="inline-flex items-center gap-1.5 rounded-full bg-background px-2.5 py-1 text-xs font-medium text-foreground">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Válida
               </span>
               <span className="font-mono text-[11px]">Flask + Supabase + Vercel</span>
               <span className="ml-auto hidden text-faint sm:inline">Mencionado, no protagonista</span>
@@ -496,10 +496,7 @@ function StackSection() {
             </Fade>
           ))}
         </div>
-        <p className="mt-6 text-xs text-faint">
-          Tipografía Fraunces para títulos, Geist para UI, Mono para tickets. Radius 12px siempre. Motion 150ms solo para feedback.
-        </p>
-      </div>
+        </div>
     </section>
   );
 }
@@ -593,20 +590,22 @@ function About() {
         <Fade>
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Quién soy</p>
           <h2 className="font-display mt-2 text-[clamp(1.4rem,4vw,2rem)] font-bold leading-[1.05] tracking-[-0.02em]">
-            De Quepos. Autodidacta. <span className="font-normal italic text-muted">Me importa que digas “ahora sí”.</span>
+            Estudiante de Desarrollo Web. <span className="font-normal italic text-muted">Con sistemas propios que sí se usan.</span>
           </h2>
           <div className="mt-4 space-y-3 text-sm leading-[1.7] text-muted">
             <p>
-              Soy Greikol. La verdad es que hago sistemas chicos que quitan trabajo, no que añaden pasos. Empecé con coles técnicos de Quepos
-              y Matapalo y sin ir más lejos terminé dibujando un gimnasio silla por silla porque 12 botones grises no le servían a nadie.
+              Soy Greikol Yanfred Quesada Amador, estoy en duodécimo año de Desarrollo Web en el Colegio Técnico Profesional de Quepos.
+              La verdad es que hago sistemas chicos que quitan trabajo, no que añaden pasos. Empecé vendiéndolos a colegios y negocios de
+              Quepos y Matapalo, y sin ir más lejos terminé dibujando un gimnasio silla por silla porque 12 botones grises no le servían a nadie.
             </p>
             <p>
-              Si te sirve, te armo lo tuyo con el mismo cuidado: rápido en el cel, sin manual, y con el código abierto para que lo veas. Mira,
-              prefiero que abras el repo y digas “se entiende” a que parezca bonito y no se use.
+              Si te sirve, te armo lo tuyo con el mismo cuidado: rápido en el cel, sin manual, y con el código abierto para que lo veas.
+              En 2025 presenté un sistema de buses en la Expotécnica del cole y coordino proyectos en equipo. Prefiero que abras el repo y digas
+              “se entiende” a que parezca bonito y no se use.
             </p>
           </div>
           <div className="mt-5 flex flex-wrap gap-2 text-xs">
-            <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-muted">Quepos · GMT-6</span>
+            <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-muted">Quepos · Puntarenas · GMT-6</span>
             <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-muted">ES · EN técnico</span>
           </div>
         </Fade>
@@ -627,7 +626,7 @@ function About() {
               </li>
             ))}
           </ul>
-          <div className="mt-6 rounded-[12px] border border-dashed border-border bg-background p-4">
+          <div className="mt-6 rounded-xl border border-dashed border-border bg-background p-4">
             <p className="font-mono text-xs uppercase tracking-wide text-faint">Lo que dice alguien que lo usa</p>
             <p className="mt-1 text-sm italic leading-relaxed text-foreground/80">
               “Antes no sabía cuántas reservas tenía hasta abrir Excel. Ahora lo veo y ya está.” — operadora, Jungle
@@ -658,7 +657,7 @@ function Contact() {
         <Fade delay={0.08} className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
           <a
             href="mailto:greikolamador@gmail.com"
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-[#07110d] hover:brightness-[1.05] active:scale-[0.98] sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-background hover:brightness-[1.05] active:scale-[0.98] sm:w-auto"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -666,7 +665,7 @@ function Contact() {
             greikolamador@gmail.com
           </a>
           <a
-            href="https://wa.me/50661161249"
+            href="https://wa.me/50661272074"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 text-sm font-medium text-foreground hover:bg-surface-hover sm:w-auto"
@@ -674,7 +673,18 @@ function Contact() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
             </svg>
-            +506 6116 1249
+            +506 6127 2074
+          </a>
+          <a
+            href="https://linkedin.com/in/greikol"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 text-sm font-medium text-foreground hover:bg-surface-hover sm:w-auto"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.53C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+            </svg>
+            LinkedIn
           </a>
           <a
             href="https://github.com/greikol4321-hub"
@@ -701,7 +711,7 @@ function Footer() {
   return (
     <footer className="border-t border-border px-5 py-8 md:px-6">
       <div className="mx-auto flex max-w-[1120px] flex-col items-center justify-between gap-3 text-xs text-faint md:flex-row">
-        <p>© {new Date().getFullYear()} Greikol Q.A — Quepos, Costa Rica · Next.js 16 + Tailwind v4</p>
+        <p>© {new Date().getFullYear()} Greikol Yanfred Quesada Amador — Quepos, Costa Rica · Next.js + Tailwind</p>
         <p className="inline-flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Mirá el código, no el mockup
           <a

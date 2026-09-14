@@ -1,44 +1,24 @@
-import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const fraunces = Fraunces({
-  variable: "--font-display",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "600", "700", "900"],
-  style: ["normal", "italic"],
-});
-
 export const metadata = {
-  title: "Greikol Q.A — Sistemas que usan colegios y tours de Costa Rica",
+  title: "Greikol Yanfred Quesada Amador — Estudiante de Desarrollo Web",
   description:
-    "Soy Greikol, de Quepos. Hago sistemas chicos que ya están en producción: venta de entradas con QR y SINPE, taquillas por sede, paneles para tours en la selva. Sin humo, código abierto, funcionan con 200 padres en fila.",
+    "Estudiante de Desarrollo Web en el CTP de Quepos. Construyo, despliego y vendo sistemas web propios: entradas con QR y SINPE, taquillas por sede, paneles para tours. Java, Python, C#, SQL, Git/GitHub.",
   keywords: [
-    "Greikol",
+    "Greikol Quesada",
     "Quepos Costa Rica",
     "desarrollador web Costa Rica",
+    "estudiante desarrollo web",
     "Next.js",
     "Supabase",
     "Flask",
     "taquilla QR",
     "SINPE Movil",
-    "tours Costa Rica",
+    "Java Python C#",
   ],
-  authors: [{ name: "Greikol Q.A" }],
+  authors: [{ name: "Greikol Yanfred Quesada Amador" }],
   openGraph: {
-    title: "Greikol Q.A — Sistemas que ya están en uso",
+    title: "Greikol Quesada — Estudiante de Desarrollo Web",
     description:
       "De Quepos para colegios y negocios reales. QR que no se revende, mapas de mesas que sí se entienden, paneles que no piden manual.",
     type: "website",
@@ -49,14 +29,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} overflow-x-hidden scroll-smooth`}
-    >
+    <html lang="es" className="overflow-x-hidden scroll-smooth">
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </head>
-      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-accent selection:text-stone-950">
+      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-accent selection:text-background">
         {children}
       </body>
     </html>
