@@ -16,11 +16,10 @@ export default function TextReveal({ text, className = "", as: Tag = "span", del
         <motion.span
           key={i}
           style={{ display: "inline-block", whiteSpace: "pre" }}
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.3,
+            duration: 0.35,
             delay: delay + i * 0.04,
             ease: [0.22, 1, 0.36, 1],
           }}
