@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Referencias vintage</title>
+  <style>
+    :root { --paper:#efe3c9; --ink:#19362e; --red:#a04331; }
+    * { box-sizing:border-box; } body { margin:0; padding:48px 20px; background:var(--paper); color:var(--ink); font-family:"Courier New",monospace; }
+    main { max-width:1100px; margin:auto; } h1,h2 { font-family:Georgia,serif; } h1 { font-size:clamp(2.4rem,7vw,5rem); margin:0 0 12px; letter-spacing:-.06em; } p { line-height:1.6; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:42px; }.card { min-height:390px; padding:22px; border:2px solid var(--ink); background:#f7efd9; box-shadow:7px 7px 0 var(--ink); }.card h2 { font-size:2rem; line-height:.9; }.label { color:var(--red); font-size:11px; font-weight:bold; letter-spacing:.13em; }.one { font-family:Georgia,serif; }.two { background:#c5d0bd; border-radius:18px; box-shadow:7px 7px 0 #19362e; }.three { background:#e6c9ab; border-style:dashed; transform:rotate(.8deg); }.button { display:inline-block; margin-top:24px; padding:10px 13px; border:2px solid var(--ink); background:var(--red); color:var(--paper); font-size:11px; font-weight:bold; text-decoration:none; box-shadow:3px 3px 0 var(--ink); } @media(max-width:760px){.grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="label">REFERENCIAS PARA EL PORTAFOLIO</p>
+    <h1>Tres rutas vintage.</h1>
+    <p>Estas tarjetas son una vista rápida de tres intensidades. La página principal implementa la primera: editorial y cálida.</p>
+    <div class="grid">
+      <article class="card one"><p class="label">01 / IMPLEMENTADA</p><h2>Expediente editorial</h2><p>Papel envejecido, tinta verde, serif clásica, fichas técnicas y sellos. Se siente profesional sin perder cercanía.</p><a class="button" href="/">Ver aplicada</a></article>
+      <article class="card two"><p class="label">02 / OPCIÓN</p><h2>Archivo de campo</h2><p>Más suave y orgánica. Verde deslavado, bordes redondeados y una estética de cuaderno de trabajo.</p><span class="button">Vista conceptual</span></article>
+      <article class="card three"><p class="label">03 / OPCIÓN</p><h2>Taller tipográfico</h2><p>Más gráfica y ruidosa. Sellos, líneas discontinuas y composiciones inclinadas para un look más experimental.</p><span class="button">Vista conceptual</span></article>
+    </div>
+  </main>
+</body>
+</html>
