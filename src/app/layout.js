@@ -1,38 +1,40 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Greikol Yanfred Quesada Amador — Estudiante de Desarrollo Web",
+  title: "Greikol Quesada — Desarrollo Web en Quepos",
   description:
-    "Estudiante de Desarrollo Web en el CTP de Quepos. Construyo, despliego y vendo sistemas web propios: entradas con QR y SINPE, taquillas por sede, paneles para tours. Java, Python, C#, SQL, Git/GitHub.",
+    "Construyo y despliego sistemas web en uso: entradas con QR y SINPE, taquillas por sede, paneles para tours y reservas. Next.js, Flask, Supabase y PostgreSQL.",
   keywords: [
     "Greikol Quesada",
     "Quepos Costa Rica",
     "desarrollador web Costa Rica",
-    "estudiante desarrollo web",
     "Next.js",
-    "Supabase",
+    "React",
+    "Tailwind",
     "Flask",
+    "Supabase",
+    "PostgreSQL",
     "taquilla QR",
     "SINPE Movil",
-    "Java Python C#",
   ],
   authors: [{ name: "Greikol Yanfred Quesada Amador" }],
+  metadataBase: new URL("https://portafolio-greikol.vercel.app"),
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Greikol Quesada — Estudiante de Desarrollo Web",
+    title: "Greikol Quesada — Desarrollo Web en Quepos",
     description:
-      "De Quepos para colegios y negocios reales. QR que no se revende, mapas de mesas que sí se entienden, paneles que no piden manual.",
+      "Sistemas en uso para colegios, negocios y turismo: entradas con QR, taquillas por sede y paneles que no necesitan manual.",
+    url: "/",
+    siteName: "Greikol Quesada — Desarrollo Web",
     type: "website",
     locale: "es_CR",
   },
-  metadataBase: new URL("https://portafolio-greikol.vercel.app"),
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="es" className="overflow-x-hidden scroll-smooth">
-      <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-      </head>
       <body className="min-h-screen bg-background text-foreground antialiased selection:bg-accent selection:text-background">
         {children}
       </body>

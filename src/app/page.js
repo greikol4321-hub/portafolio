@@ -20,6 +20,7 @@ const projects = [
     stack: ["Flask", "Supabase + RLS", "Storage", "Vercel"],
     code: "https://github.com/greikol4321-hub/taquilla",
     demo: "https://taquilla-quepos.vercel.app",
+    demoLabel: "Demo con acceso ↗",
   },
   {
     title: "Jungle Wildlife Tours",
@@ -38,7 +39,6 @@ const projects = [
     solution: "Siete pantallas para usuarios, proyectos, asignaciones, resultados y observaciones; genera PDF y reutiliza el mismo núcleo para dos colegios.",
     highlight: "Vanilla JS · PDF · mismo core",
     stack: ["JavaScript", "Supabase + RLS", "jsPDF", "Vercel"],
-    code: "https://github.com/greikol4321-hub/evaluaciones-CTPQ",
   },
 ];
 
@@ -53,21 +53,35 @@ function CodeMark() {
 }
 
 function ProjectCard({ project, index }) {
-  return <Reveal delay={index * 0.06} className="portfolio-card"><div className="card-topline"><span>{project.status}</span><span>0{index + 1}</span></div><h3>{project.title}</h3><div className="case-copy"><p><b>Problema.</b> {project.problem}</p><p><b>Lo que hice.</b> {project.solution}</p></div><p className="project-highlight">{project.highlight}</p><div className="tech-list">{project.stack.map((item) => <span key={item}>{item}</span>)}</div><div className="project-actions"><a href={project.code} target="_blank" rel="noreferrer">Código ↗</a>{project.demo && <a className="project-demo" href={project.demo} target="_blank" rel="noreferrer">Ver sitio ↗</a>}</div></Reveal>;
+  return <Reveal delay={index * 0.06} className="portfolio-card"><div className="card-topline"><span>{project.status}</span><span>0{index + 1}</span></div><h3>{project.title}</h3><div className="case-copy"><p><b>Problema.</b> {project.problem}</p><p><b>Lo que hice.</b> {project.solution}</p></div><p className="project-highlight">{project.highlight}</p><div className="tech-list">{project.stack.map((item) => <span key={item}>{item}</span>)}</div>{(project.code || project.demo) && <div className="project-actions">{project.code && <a href={project.code} target="_blank" rel="noreferrer">Código ↗</a>}{project.demo && <a className="project-demo" href={project.demo} target="_blank" rel="noreferrer">{project.demoLabel || "Ver sitio ↗"}</a>}</div>}</Reveal>;
 }
 
 export default function Home() {
   return <div className="wander-page">
     <header className="wander-header"><a className="brand code-brand" href="#inicio" aria-label="Ir al inicio"><CodeMark /><span>Greikol<br /><small>Quesada · dev</small></span></a><nav aria-label="Navegación principal"><a href="#trabajo">Proyectos</a><a href="#servicios">Servicios</a><a href="#perfil">Perfil</a><a href="#contacto">Contacto</a></nav><a className="header-note" href="https://mail.google.com/mail/?view=cm&fs=1&to=greikolamador@gmail.com" target="_blank" rel="noreferrer">DISPONIBLE<br /><span>QUEPOS, CR</span></a></header>
     <main id="inicio">
-      <section className="portfolio-hero"><Reveal><p className="eyebrow">PORTAFOLIO / DESARROLLO WEB / 2026</p><h1>Software para<br /><em>problemas reales.</em></h1><p className="lead">Soy Greikol Quesada. Desarrollo sistemas para colegios, negocios y turismo: entradas, paneles y herramientas que no necesitan manual para usarse.</p><div className="hero-links"><a className="hero-primary" href="#trabajo">Ver proyectos</a><a href="https://github.com/greikol4321-hub" target="_blank" rel="noreferrer">GitHub ↗</a></div></Reveal><Reveal delay={0.1} className="proof-board"><p className="eyebrow">EN PRODUCCIÓN</p><div><strong>4</strong><span>proyectos<br />publicados</span></div><div><strong>2</strong><span>colegios usando<br />el mismo core</span></div><div><strong>12</strong><span>mesas mapeadas<br />silla por silla</span></div><p className="proof-note">De Quepos para gente que necesita que las cosas funcionen.</p></Reveal></section>
+      <section className="portfolio-hero"><Reveal><p className="eyebrow">PORTAFOLIO / DESARROLLO WEB / 2026</p><h1>Software para<br /><em>problemas reales.</em></h1><p className="lead">Soy Greikol Quesada. Desarrollo sistemas para colegios, negocios y turismo: entradas, paneles y herramientas fáciles de usar.</p><div className="hero-links"><a className="hero-primary" href="#trabajo">Ver proyectos</a><a href="https://github.com/greikol4321-hub" target="_blank" rel="noreferrer">GitHub ↗</a></div></Reveal><Reveal delay={0.1} className="proof-board">
+<p className="eyebrow">EN PRODUCCIÓN</p>
+<p>Proyectos en producción que funcionan</p>
+<p className="proof-note">para gente que necesita que las cosas funcionen.</p>
+</Reveal></section>
       <section className="signal-strip"><span>QUEPOS, COSTA RICA</span><span>FLASK · NEXT.JS · SUPABASE</span><span>FREELANCE Y EQUIPO</span></section>
       <section className="work-intro" id="trabajo"><Reveal><p className="eyebrow">CASOS DE ESTUDIO</p><h2>No son ejercicios.<br /><em>Son sistemas en uso.</em></h2><p>Cada proyecto parte de un problema concreto y termina con una herramienta que se puede abrir, probar y mantener.</p></Reveal></section>
       <section className="project-section"><div className="project-ledger">{projects.map((project, index) => <ProjectCard key={project.title} project={project} index={index} />)}</div><a className="github-all" href="https://github.com/greikol4321-hub" target="_blank" rel="noreferrer">Ver todos los repositorios en GitHub ↗</a></section>
-      <section className="services-portfolio" id="servicios"><Reveal><p className="eyebrow">LO QUE PUEDO CONSTRUIR</p><h2>De la idea<br /><em>a algo usable.</em></h2></Reveal><div className="service-grid"><Reveal><h3>Webs y reservas</h3><p>Webs rápidas para tours y negocios, con reservas por WhatsApp, contenido editable y SEO desde el inicio.</p></Reveal><Reveal delay={0.05}><h3>Entradas y QR</h3><p>Flujos de pago por SINPE, asientos, comprobantes, QR y validación en puerta.</p></Reveal><Reveal delay={0.1}><h3>Paneles internos</h3><p>Herramientas para administrar usuarios, contenido, ventas, evaluaciones y reportes sin enredos.</p></Reveal></div></section>
+      <section className="services-portfolio" id="servicios"><Reveal><p className="eyebrow">LO QUE PUEDO CONSTRUIR</p><h2>De la idea<br /><em>a algo usable.</em></h2></Reveal><div className="service-grid"><Reveal><h3>Webs y reservas</h3><p>Webs rápidas para tours y negocios, con reservas por WhatsApp, contenido editable y SEO desde el inicio.</p></Reveal><Reveal delay={0.05}><h3>Entradas y QR</h3><p>Flujos de pago por SINPE, asientos, comprobantes, QR y validación en entrada.</p></Reveal><Reveal delay={0.1}><h3>Paneles internos</h3><p>Herramientas para administrar usuarios, contenido, ventas, evaluaciones y reportes sin complicaciones.</p></Reveal></div></section>
       <section className="stack-section"><Reveal><p className="eyebrow">HERRAMIENTAS</p><h2>Con esto trabajo.</h2></Reveal><div className="stack-grid">{stackGroups.map(([title, ...items], index) => <Reveal key={title} delay={index * 0.05} className="stack-group"><h3>{title}</h3><div>{items.map((item) => <span key={item}>{item}</span>)}</div></Reveal>)}</div></section>
-      <section className="about-section" id="perfil"><Reveal><p className="eyebrow">PERFIL</p><h2>Menos pasos.<br /><em>Mejor uso.</em></h2></Reveal><Reveal delay={0.08} className="about-copy"><p>Soy Greikol Yanfred Quesada Amador, estudiante de Desarrollo Web en el CTP de Quepos. Empecé construyendo sistemas para colegios y negocios de Quepos y Matapalo.</p><p>Me importa más que una persona pueda vender una entrada o encontrar una reserva sin preguntar, que llenar una pantalla de funciones. Si necesita manual, todavía no está listo.</p></Reveal></section>
-      <section className="contact-camp" id="contacto"><div className="contact-torn"><p className="eyebrow">CONTACTO</p><h2>¿Tenés algo que<br /><em>ordenar o construir?</em></h2><p>Escribime con el problema que necesitás resolver. Te digo directo cómo lo abordaría.</p><a className="contact-button" href="https://mail.google.com/mail/?view=cm&fs=1&to=greikolamador@gmail.com" target="_blank" rel="noreferrer">Enviar correo por Gmail ↗</a></div><div className="contact-card contact-directory"><p>OTRAS FORMAS DE CONTACTARME</p><a className="contact-channel" href="https://wa.me/50661272074" target="_blank" rel="noreferrer"><span>WhatsApp</span><strong>+506 6127-2074 ↗</strong></a><a className="contact-channel" href="https://github.com/greikol4321-hub" target="_blank" rel="noreferrer"><span>GitHub</span><strong>@greikol4321-hub ↗</strong></a><a className="contact-channel" href="https://linkedin.com/in/greikol" target="_blank" rel="noreferrer"><span>LinkedIn</span><strong>/in/greikol ↗</strong></a><div className="contact-location"><CodeMark /><span>QUEPOS, COSTA RICA</span></div></div></section>
+      <section className="about-section" id="perfil"><Reveal><p className="eyebrow">PERFIL</p><h2>Menos fricción.<br /><em>Mejores resultados.</em></h2></Reveal><Reveal delay={0.08} className="about-copy"><p>Soy Greikol Yanfred Quesada Amador, estudiante de duodécimo año en Desarrollo Web en el Colegio Técnico Profesional de Quepos.
+
+Formación: Educación General Básica (2023) y Desarrollo Web (graduación 2026).
+
+Experiencia destacada: Proyecto STEAM Expotécnica 2025 (aplicación de buses escolares) y Trabajo Comunal Estudiantil (renovación de aulas).
+
+Soy responsable, con experiencia en trabajo en equipo y liderazgo. Me enfoco en construir sistemas web que funcionen sin manual, especialmente para ventas de entradas, taquillas y paneles. He construido sistemas usados en colegios y turismo de Quepos.
+
+Habilidades clave: Java · Python · HTML · CSS · C# · MySQL (XAMPP) · Git/GitHub · Despliegue en producción · Office (intermedio) · Redes e IoT básicos. Especialidad: resolver problemas concretos con mínima fricción — desde flujos QR hasta paneles multi-sede.
+
+</p></Reveal></section>
+      <section className="contact-camp" id="contacto"><div className="contact-torn"><p className="eyebrow">CONTACTO</p><h2>¿Tienes algo que<br /><em>ordenar o construir?</em></h2><p>Escribanos con el problema que necesitan resolver. Te respondemos de forma directa cómo lo abordamos.</p><a className="contact-button" href="https://mail.google.com/mail/?view=cm&fs=1&to=greikolamador@gmail.com" target="_blank" rel="noreferrer">Enviar correo por Gmail ↗</a></div><div className="contact-card contact-directory"><p>OTRAS FORMAS DE CONTACTARME</p><a className="contact-channel" href="https://wa.me/50661272074" target="_blank" rel="noreferrer"><span>WhatsApp</span><strong>+506 6127-2074 ↗</strong></a><a className="contact-channel" href="https://github.com/greikol4321-hub" target="_blank" rel="noreferrer"><span>GitHub</span><strong>@greikol4321-hub ↗</strong></a><a className="contact-channel" href="https://linkedin.com/in/greikol" target="_blank" rel="noreferrer"><span>LinkedIn</span><strong>/in/greikol ↗</strong></a><div className="contact-location"><CodeMark /><span>QUEPOS, COSTA RICA</span></div></div></section>
     </main>
     <footer className="wander-footer"><span>GREIKOL QUESADA · DESARROLLO WEB</span><span>© {new Date().getFullYear()} / HECHO EN QUEPOS</span></footer>
   </div>;
