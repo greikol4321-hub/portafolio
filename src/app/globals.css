@@ -109,7 +109,32 @@ a { color: inherit; }
   .contact-channel { min-height: 48px; }
 }
 
-/* The case-study introduction is a reading block, not a split layout. */
+/* Motion language: un solo easing ease-out fuerte, solo transform/opacity. */
+:root { --ease-out: cubic-bezier(0.22, 1, 0.36, 1); }
+.portfolio-card { transition: transform 180ms var(--ease-out), background-color 180ms var(--ease-out); }
+.portfolio-card:hover { padding-inline: 0; background: rgb(238 229 200 / .38); transform: translateX(6px); }
+.portfolio-card:active { transform: translateX(3px); transition-duration: 120ms; }
+.service-grid > div { transition: transform 180ms var(--ease-out), border-color 180ms var(--ease-out); }
+.service-grid > div:hover { border-color: var(--rust); transform: translateY(-3px); }
+.service-grid > div:active { transform: translateY(-1px); transition-duration: 120ms; }
+.wander-header nav a { transition: color 120ms var(--ease-out); }
+.code-brand svg { transition: transform 180ms var(--ease-out), background-color 180ms var(--ease-out), border-color 180ms var(--ease-out); }
+.hero-primary, .project-demo, .contact-button, .github-all { transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out), color 120ms var(--ease-out); }
+.contact-channel { transition: transform 160ms var(--ease-out); }
+.contact-channel strong { transition: color 120ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .hero-primary:hover, .project-demo:hover { transform: translateY(-1px); }
+  .contact-button:hover, .github-all:hover { transform: translateY(-1px); }
+  .contact-channel:hover { transform: translateX(4px); }
+  .code-brand:hover svg { transform: translateY(-1px); }
+}
+.hero-primary:active, .project-demo:active, .contact-button:active { transform: translateY(0) scale(0.98); transition-duration: 100ms; }
+@media (max-width: 760px) {
+  .portfolio-card:hover { transform: none; }
+}
+@media (hover: none) {
+  .portfolio-card:hover, .service-grid > div:hover, .contact-channel:hover { transform: none; }
+}
 .work-intro > div {
   display: block;
   max-width: 720px;
