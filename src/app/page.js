@@ -3,38 +3,79 @@
 import { motion, useReducedMotion } from "motion/react";
 
 const projects = [
-  { title: "Taquilla", status: "EN PRODUCCIÓN", body: "Taquilla multi-sede con generación de entradas y validación por cámara.", stack: "Flask · Supabase", code: "https://github.com/greikol4321-hub/taquilla", demo: "https://taquilla-quepos.vercel.app" },
-  { title: "Jungle Wildlife Tours", status: "COMPLETADO", body: "Sitio web y panel administrativo para una empresa de tours, con soporte multi-idioma.", stack: "Next.js · React · Supabase", code: "https://github.com/greikol4321-hub/jungle-wildlife-tours", demo: "https://jungle-wildlife-tours.vercel.app" },
-  { title: "Evaluación Ferias", status: "EN USO · 2 COLEGIOS MEP", body: "Evaluación de proyectos en ferias escolares con reportes PDF.", stack: "JavaScript · Supabase", code: "https://github.com/greikol4321-hub/evaluaciones-CTPQ" },
-  { title: "Entradas CTPM", status: "EN DESARROLLO", body: "Venta de entradas con QR y verificación manual de comprobantes de pago.", stack: "Flask · Supabase", code: "https://github.com/greikol4321-hub/entradas-ctpm", demo: "https://entradas-ctpm.vercel.app" },
+  {
+    title: "Entradas CTPM",
+    status: "CTP MATAPALO · EN USO",
+    problem: "El Baile de Gala se vendía a mano: filas, comprobantes por WhatsApp y familias sin saber dónde sentarse.",
+    solution: "Mapa 1:1 del gimnasio con 12 mesas y 72 sillas. El pago por SINPE se revisa, luego llega el QR y en puerta cada entrada se valida una sola vez.",
+    highlight: "12 mesas · 72 sillas · QR de 5 letras",
+    stack: ["Flask 3.1", "Supabase", "QR", "Vercel"],
+    code: "https://github.com/greikol4321-hub/entradas-ctpm",
+    demo: "https://entradas-ctpm.vercel.app",
+  },
+  {
+    title: "Taquilla",
+    status: "MULTI-SEDE · PRODUCCIÓN",
+    problem: "Cada sede vendía por separado y el portero no podía saber con seguridad si un QR ya había entrado.",
+    solution: "Vendedor genera, portero valida con cámara y cada sede ve solo lo suyo. El admin general mantiene el control sin mezclar operaciones.",
+    highlight: "RLS por sede · cámara · 1 escaneo",
+    stack: ["Flask", "Supabase + RLS", "Storage", "Vercel"],
+    code: "https://github.com/greikol4321-hub/taquilla",
+    demo: "https://taquilla-quepos.vercel.app",
+  },
+  {
+    title: "Jungle Wildlife Tours",
+    status: "TURISMO · COMPLETADO",
+    problem: "Una empresa de tours necesitaba recibir reservas y gestionar su contenido sin depender de un desarrollador para cada cambio.",
+    solution: "Web pública, panel para tours, reseñas y contactos, con contenido en varios idiomas y flujos pensados para una sola persona administrando.",
+    highlight: "Next.js · panel · i18n",
+    stack: ["Next.js 16", "React", "Supabase", "TypeScript"],
+    code: "https://github.com/greikol4321-hub/jungle-wildlife-tours",
+    demo: "https://jungle-wildlife-tours.vercel.app",
+  },
+  {
+    title: "Evaluación de Ferias",
+    status: "MEP · 2 COLEGIOS",
+    problem: "Las ferias se evaluaban en papel y consolidar resultados tomaba demasiado tiempo.",
+    solution: "Siete pantallas para usuarios, proyectos, asignaciones, resultados y observaciones; genera PDF y reutiliza el mismo núcleo para dos colegios.",
+    highlight: "Vanilla JS · PDF · mismo core",
+    stack: ["JavaScript", "Supabase + RLS", "jsPDF", "Vercel"],
+    code: "https://github.com/greikol4321-hub/evaluaciones-CTPQ",
+  },
 ];
 
-const services = [
-  ["01", "Webs para tours y negocios", "Páginas rápidas para celular, reservas por WhatsApp, SEO y fotos optimizadas."],
-  ["02", "Taquilla y entradas con QR + SINPE", "Vender, comprobar pagos y validar una entrada una sola vez."],
-  ["03", "Paneles admin que no piden manual", "El dueño crea, ve y responde sin llamar al desarrollador."],
-  ["04", "Sistemas para coles y ferias", "Evaluaciones, votaciones y controles internos que cualquier profe puede abrir."],
+const stackGroups = [
+  ["Frontend", "Next.js 16", "React 19", "Tailwind v4", "TypeScript", "JavaScript"],
+  ["Backend y datos", "Flask 3.1", "Supabase", "PostgreSQL", "RLS", "Python"],
+  ["Entrega y criterio", "Vercel", "Git / GitHub", "PDF + QR", "Accesibilidad AA", "SEO técnico"],
 ];
 
 function Reveal({ children, className = "", delay = 0 }) {
   const reduceMotion = useReducedMotion();
-  return <motion.div className={className} initial={reduceMotion ? false : { opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: 0.5, delay }}>{children}</motion.div>;
+  return <motion.div className={className} initial={reduceMotion ? false : { opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.48, delay }}>{children}</motion.div>;
 }
 
-function ProjectEntry({ project, index }) {
-  return <Reveal delay={index * 0.05} className="project-entry"><div className="entry-meta"><span>{project.status}</span><span>0{index + 1}</span></div><h3>{project.title}</h3><p>{project.body}</p><p className="entry-stack">{project.stack}</p><div className="entry-links"><a href={project.code} target="_blank" rel="noreferrer">Código ↗</a>{project.demo && <a href={project.demo} target="_blank" rel="noreferrer">Ver sitio ↗</a>}</div></Reveal>;
+function CodeMark() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 7l5 5-5 5M12 19h7" /></svg>;
+}
+
+function ProjectCard({ project, index }) {
+  return <Reveal delay={index * 0.06} className="portfolio-card"><div className="card-topline"><span>{project.status}</span><span>0{index + 1}</span></div><h3>{project.title}</h3><div className="case-copy"><p><b>Problema.</b> {project.problem}</p><p><b>Lo que hice.</b> {project.solution}</p></div><p className="project-highlight">{project.highlight}</p><div className="tech-list">{project.stack.map((item) => <span key={item}>{item}</span>)}</div><div className="project-actions"><a href={project.code} target="_blank" rel="noreferrer">Código ↗</a>{project.demo && <a className="project-demo" href={project.demo} target="_blank" rel="noreferrer">Ver sitio ↗</a>}</div></Reveal>;
 }
 
 export default function Home() {
   return <div className="wander-page">
-    <header className="wander-header"><a className="brand" href="#inicio" aria-label="Ir al inicio"><span className="brand-mark">✳</span><span>Greikol<br /><small>Quesada</small></span></a><nav aria-label="Navegación principal"><a href="#trabajo">Trabajo</a><a href="#proceso">Proceso</a><a href="#perfil">Quién soy</a><a href="#contacto">Contacto</a></nav><a className="header-note" href="mailto:greikolamador@gmail.com">ESCRIBIME<br /><span>QUEPOS, CR</span></a></header>
+    <header className="wander-header"><a className="brand code-brand" href="#inicio" aria-label="Ir al inicio"><CodeMark /><span>Greikol<br /><small>Quesada · dev</small></span></a><nav aria-label="Navegación principal"><a href="#trabajo">Proyectos</a><a href="#servicios">Servicios</a><a href="#perfil">Perfil</a><a href="#contacto">Contacto</a></nav><a className="header-note" href="mailto:greikolamador@gmail.com">DISPONIBLE<br /><span>QUEPOS, CR</span></a></header>
     <main id="inicio">
-      <section className="dispatch" id="trabajo"><Reveal className="dispatch-main"><p className="eyebrow">DESDE QUEPOS, COSTA RICA</p><h1>Sistemas web<br /><em>que se usan</em><br />de verdad.</h1><p className="lead">Construyo herramientas claras para colegios, tours y negocios que necesitan cobrar, organizar y trabajar con menos pasos.</p><a className="outline-link" href="#proyectos">Ver proyectos ↓</a><div className="paper-note"><p className="eyebrow">UNA NOTA DEL TALLER</p><h2>Diseño primero.<br />Código después.</h2><p>Antes de programar, dibujo el flujo. Si una persona no entiende qué tocar, la interfaz todavía no está lista.</p><span className="stamp">HECHO EN<br />QUEPOS</span></div></Reveal><aside className="dispatch-aside"><div className="aside-title"><h2>Bitácora</h2><span>REPORTES</span></div><article><p className="eyebrow">01 / EN PRODUCCIÓN</p><h3>Taquilla multi-sede</h3><p>Vendedor genera. Portero valida con cámara. RLS separa cada sede.</p><a href="https://taquilla-quepos.vercel.app" target="_blank" rel="noreferrer">LEER MÁS ↗</a></article><article><p className="eyebrow">02 / COMPLETADO</p><h3>Jungle Wildlife Tours</h3><p>Web, panel e idiomas para que una empresa de tours pueda recibir reservas.</p><a href="https://jungle-wildlife-tours.vercel.app" target="_blank" rel="noreferrer">LEER MÁS ↗</a></article><div className="campfire" aria-hidden="true">♨</div></aside></section>
-      <section className="project-section" id="proyectos"><Reveal><p className="eyebrow">TRABAJO RECIENTE</p><h2>Proyectos que<br /><em>salieron del papel.</em></h2></Reveal><div className="project-ledger">{projects.map((project, index) => <ProjectEntry key={project.title} project={project} index={index} />)}</div></section>
-      <section className="process-section" id="proceso"><Reveal><p className="eyebrow">CÓMO TRABAJO</p><h2>Un camino corto<br /><em>hasta la demo.</em></h2></Reveal><div className="service-ledger">{services.map(([number, title, body], index) => <Reveal key={title} delay={index * 0.04} className="service-entry"><span>{number}</span><div><h3>{title}</h3><p>{body}</p></div></Reveal>)}</div></section>
-      <section className="about-section" id="perfil"><Reveal><p className="eyebrow">QUIÉN SOY</p><h2>El desarrollador<br /><em>del otro lado.</em></h2></Reveal><div className="about-copy"><p>Soy Greikol Yanfred Quesada Amador, estudiante de Desarrollo Web en el CTP de Quepos. Empecé con colegios y negocios de la zona, resolviendo problemas muy concretos con sistemas pequeños.</p><p>Me gusta que una pantalla se entienda antes de que alguien tenga que pedir instrucciones. Por eso cada proyecto empieza con una conversación y termina con algo que se puede tocar.</p></div></section>
-      <section className="contact-camp" id="contacto"><div className="contact-torn"><p className="eyebrow">ESCRIBIME</p><h2>¿Qué necesitás<br /><em>ordenar o construir?</em></h2><p>Contame qué pasa hoy. Te respondo directo si lo puedo resolver y cómo lo abordaría.</p><a className="contact-button" href="mailto:greikolamador@gmail.com">greikolamador@gmail.com ↗</a></div><div className="contact-card"><span>PARA: GREIKOL QUESADA</span><a href="https://wa.me/50661272074" target="_blank" rel="noreferrer">WhatsApp<br /><strong>6127-2074</strong></a><span>BASE: QUEPOS, CR</span><span className="postage">✳<br />COSTA RICA</span></div></section>
+      <section className="portfolio-hero"><Reveal><p className="eyebrow">PORTAFOLIO / DESARROLLO WEB / 2026</p><h1>Software para<br /><em>problemas reales.</em></h1><p className="lead">Soy Greikol Quesada. Desarrollo sistemas para colegios, negocios y turismo: entradas, paneles y herramientas que no necesitan manual para usarse.</p><div className="hero-links"><a className="hero-primary" href="#trabajo">Ver proyectos</a><a href="https://github.com/greikol4321-hub" target="_blank" rel="noreferrer">GitHub ↗</a></div></Reveal><Reveal delay={0.1} className="proof-board"><p className="eyebrow">EN PRODUCCIÓN</p><div><strong>4</strong><span>proyectos<br />publicados</span></div><div><strong>2</strong><span>colegios usando<br />el mismo core</span></div><div><strong>12</strong><span>mesas mapeadas<br />silla por silla</span></div><p className="proof-note">De Quepos para gente que necesita que las cosas funcionen.</p></Reveal></section>
+      <section className="signal-strip"><span>QUEPOS, COSTA RICA</span><span>FLASK · NEXT.JS · SUPABASE</span><span>FREELANCE Y EQUIPO</span></section>
+      <section className="work-intro" id="trabajo"><Reveal><p className="eyebrow">CASOS DE ESTUDIO</p><h2>No son ejercicios.<br /><em>Son sistemas en uso.</em></h2><p>Cada proyecto parte de un problema concreto y termina con una herramienta que se puede abrir, probar y mantener.</p></Reveal></section>
+      <section className="project-section"><div className="project-ledger">{projects.map((project, index) => <ProjectCard key={project.title} project={project} index={index} />)}</div><a className="github-all" href="https://github.com/greikol4321-hub" target="_blank" rel="noreferrer">Ver todos los repositorios en GitHub ↗</a></section>
+      <section className="services-portfolio" id="servicios"><Reveal><p className="eyebrow">LO QUE PUEDO CONSTRUIR</p><h2>De la idea<br /><em>a algo usable.</em></h2></Reveal><div className="service-grid"><Reveal><h3>Webs y reservas</h3><p>Webs rápidas para tours y negocios, con reservas por WhatsApp, contenido editable y SEO desde el inicio.</p></Reveal><Reveal delay={0.05}><h3>Entradas y QR</h3><p>Flujos de pago por SINPE, asientos, comprobantes, QR y validación en puerta.</p></Reveal><Reveal delay={0.1}><h3>Paneles internos</h3><p>Herramientas para administrar usuarios, contenido, ventas, evaluaciones y reportes sin enredos.</p></Reveal></div></section>
+      <section className="stack-section"><Reveal><p className="eyebrow">HERRAMIENTAS</p><h2>Con esto trabajo.</h2></Reveal><div className="stack-grid">{stackGroups.map(([title, ...items], index) => <Reveal key={title} delay={index * 0.05} className="stack-group"><h3>{title}</h3><div>{items.map((item) => <span key={item}>{item}</span>)}</div></Reveal>)}</div></section>
+      <section className="about-section" id="perfil"><Reveal><p className="eyebrow">PERFIL</p><h2>Menos pasos.<br /><em>Mejor uso.</em></h2></Reveal><Reveal delay={0.08} className="about-copy"><p>Soy Greikol Yanfred Quesada Amador, estudiante de Desarrollo Web en el CTP de Quepos. Empecé construyendo sistemas para colegios y negocios de Quepos y Matapalo.</p><p>Me importa más que una persona pueda vender una entrada o encontrar una reserva sin preguntar, que llenar una pantalla de funciones. Si necesita manual, todavía no está listo.</p></Reveal></section>
+      <section className="contact-camp" id="contacto"><div className="contact-torn"><p className="eyebrow">CONTACTO</p><h2>¿Tenés algo que<br /><em>ordenar o construir?</em></h2><p>Escribime con el problema que necesitás resolver. Te digo directo cómo lo abordaría.</p><a className="contact-button" href="mailto:greikolamador@gmail.com">greikolamador@gmail.com ↗</a></div><div className="contact-card"><span>WHATSAPP DIRECTO</span><a href="https://wa.me/50661272074" target="_blank" rel="noreferrer"><strong>+506 6127-2074</strong></a><span>QUEPOS, COSTA RICA</span><CodeMark /></div></section>
     </main>
-    <footer className="wander-footer"><span>GREIKOL QUESADA · DESARROLLO WEB</span><span>© {new Date().getFullYear()} / HECHO A MANO</span></footer>
+    <footer className="wander-footer"><span>GREIKOL QUESADA · DESARROLLO WEB</span><span>© {new Date().getFullYear()} / HECHO EN QUEPOS</span></footer>
   </div>;
 }
