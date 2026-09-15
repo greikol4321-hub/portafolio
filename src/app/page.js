@@ -62,7 +62,8 @@ export default function Home() {
     <main id="inicio">
       <section className="portfolio-hero"><Reveal><p className="eyebrow">PORTAFOLIO / DESARROLLO WEB / 2026</p><h1>Software para<br /><em>problemas reales.</em></h1><p className="lead">Soy Greikol Quesada. Desarrollo sistemas para colegios, negocios y turismo: entradas, paneles y herramientas fáciles de usar.</p><div className="hero-links"><a className="hero-primary" href="#trabajo">Ver proyectos</a><a href="https://github.com/greikol4321-hub" target="_blank" rel="noreferrer">GitHub ↗</a></div></Reveal><Reveal delay={0.1} className="proof-board">
 <p className="eyebrow">EN PRODUCCIÓN</p>
-<div><strong>✔</strong><span>Proyectos en producción</span></div>
+<div><strong>4</strong><span>proyectos<br />publicados</span></div>
+<div><strong>2</strong><span>colegios<br />usándolo</span></div>
 <p className="proof-note">para gente que necesita que las cosas funcionen.</p>
 </Reveal></section>
       <section className="signal-strip"><span>QUEPOS, COSTA RICA</span><span>FLASK · NEXT.JS · SUPABASE</span><span>FREELANCE Y EQUIPO</span></section>
