@@ -50,19 +50,14 @@ a { color: inherit; }
   stroke: var(--paper-light);
   stroke-width: 2;
 }
-.portfolio-card { transition: background-color .2s ease, padding-inline .2s ease; }
-.portfolio-card:hover { background: rgb(238 229 200 / .38); padding-inline: 14px; }
 .portfolio-card:focus-within { outline: 2px solid var(--rust); outline-offset: 5px; }
 .project-actions a, .hero-links a, .github-all, .contact-button { min-height: 44px; display: inline-flex; align-items: center; }
 .project-actions a { min-height: 32px; }
-.service-grid > div { transition: border-color .2s ease, transform .2s ease; }
-.service-grid > div:hover { border-color: var(--rust); transform: translateY(-3px); }
 .stack-group { container-type: inline-size; }
 @container (max-width: 220px) { .stack-group span { width: 100%; } }
 @media (max-width: 760px) {
   .wander-header nav { gap: 8px; }
   .wander-header nav a { min-height: 44px; display: inline-flex; align-items: center; }
-  .portfolio-card:hover { padding-inline: 0; }
   .hero-links a { min-height: 44px; }
 }
 
