@@ -151,3 +151,10 @@ a { color: inherit; }
   .work-intro > div { max-width: none; }
   .work-intro p:last-child { font-size: 13px; }
 }
+
+/* Proof board legible: mismo estilo, texto que sí se lee. */
+.proof-board > div { min-height: 0; padding: 14px; }
+.proof-board strong { margin-bottom: 6px; }
+.proof-board span { font-size: 11px; line-height: 1.55; letter-spacing: .02em; }
+.proof-board .eyebrow { font-size: 10px; }
+.proof-note { font-size: 11px; line-height: 1.55; color: #e6d9b8; }
