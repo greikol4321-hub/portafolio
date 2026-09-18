@@ -21,12 +21,14 @@ const item = {
 
 export function StaggerReveal({ children, className = "" }) {
   const reduceMotion = useReducedMotion();
+  const activeContainer = reduceMotion
+    ? { ...container, visible: { ...container.visible, transition: { duration: 0 } } }
+    : container;
   return (
     <motion.div
-      variants={reduceMotion ? undefined : container}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1, margin: "0px 0px -40px 0px" }}
+      variants={activeContainer}
+      initial={false}
+      animate="visible"
       className={className}
     >
       {children}
@@ -36,9 +38,8 @@ export function StaggerReveal({ children, className = "" }) {
 
 export function StaggerItem({ children, className = "" }) {
   const reduceMotion = useReducedMotion();
-  return (
-    <motion.div variants={reduceMotion ? undefined : item} className={className}>
-      {children}
-    </motion.div>
-  );
+  const activeItem = reduceMotion
+    ? { ...item, visible: { ...item.visible, transition: { duration: 0 } } }
+    : item;
+  return <motion.div initial={false} variants={activeItem} className={className}>{children}</motion.div>;
 }
